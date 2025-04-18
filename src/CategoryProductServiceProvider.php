@@ -2,6 +2,9 @@
 
 namespace GIS\CategoryProduct;
 
+use GIS\CategoryProduct\Interfaces\CategoryInterface;
+use GIS\CategoryProduct\Models\Category;
+use GIS\CategoryProduct\Observers\CategoryObserver;
 use Illuminate\Support\ServiceProvider;
 
 class CategoryProductServiceProvider extends ServiceProvider
@@ -47,16 +50,34 @@ class CategoryProductServiceProvider extends ServiceProvider
     {}
 
     protected function bindInterfaces(): void
-    {}
+    {
+        $categoryModelClass = config('category-product.customCategoryModel') ?? Category::class;
+        $this->app->bind(CategoryInterface::class, $categoryModelClass);
+    }
 
     protected function addLivewireComponents(): void
     {}
 
     protected function expandConfiguration(): void
-    {}
+    {
+        $cp = app()->config["category-product"];
+
+        $um = app()->config["user-management"];
+        $permissions = $um["permissions"];
+        $permissions[] = [
+            "title" => $cp["categoryPolicyTitle"],
+            "key" => $cp["categoryPolicyKey"],
+            "policy" => $cp["categoryPolicy"],
+        ];
+        app()->config["user-management.permissions"] = $permissions;
+    }
 
     protected function observeModels(): void
-    {}
+    {
+        $categoryModelClass = config('category-product.customCategoryModel') ?? Category::class;
+        $categoryObserverClass = config("category-product.customCategoryModelObserver") ?? CategoryObserver::class;
+        $categoryModelClass::observe($categoryObserverClass);
+    }
 
     protected function listenEvents(): void
     {}
