@@ -2,6 +2,7 @@
 
 namespace GIS\CategoryProduct;
 
+use GIS\CategoryProduct\Helpers\CategoryActionsManager;
 use GIS\CategoryProduct\Interfaces\CategoryInterface;
 use GIS\CategoryProduct\Models\Category;
 use GIS\CategoryProduct\Observers\CategoryObserver;
@@ -49,7 +50,12 @@ class CategoryProductServiceProvider extends ServiceProvider
     }
 
     protected function initFacades(): void
-    {}
+    {
+        $this->app->singleton("category-actions", function () {
+            $categoryActionsManagerClass = config("category-product.customCategoryActionsManager") ?? CategoryActionsManager::class;
+            return new $categoryActionsManagerClass;
+        });
+    }
 
     protected function bindInterfaces(): void
     {

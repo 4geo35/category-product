@@ -7,6 +7,9 @@ return [
 
     "customAdminCategoryController" => null,
 
+    // Facades
+    "customCategoryActionsManager" => null,
+
     // Components
     "customAdminCategoryListComponent" => null,
 
