@@ -6,6 +6,8 @@ use GIS\CategoryProduct\Interfaces\CategoryInterface;
 use GIS\CategoryProduct\Models\Category;
 use GIS\CategoryProduct\Observers\CategoryObserver;
 use Illuminate\Support\ServiceProvider;
+use Livewire\Livewire;
+use GIS\CategoryProduct\Livewire\Admin\ListWire as CategoryListWire;
 
 class CategoryProductServiceProvider extends ServiceProvider
 {
@@ -56,7 +58,13 @@ class CategoryProductServiceProvider extends ServiceProvider
     }
 
     protected function addLivewireComponents(): void
-    {}
+    {
+        $component = config("category-product.customAdminCategoryListComponent");
+        Livewire::component(
+            "cp-admin-category-list",
+            $component ?? CategoryListWire::class
+        );
+    }
 
     protected function expandConfiguration(): void
     {
