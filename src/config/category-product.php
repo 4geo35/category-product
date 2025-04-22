@@ -17,6 +17,8 @@ return [
     "customAdminCategoryListComponent" => null,
     "customAdminCategoryShowComponent" => null,
 
+    "customAdminProductListComponent" => null,
+
     // Policy
     "categoryPolicyTitle" => "Управление категориями товаров",
     "categoryPolicy" => \GIS\CategoryProduct\Policies\CategoryPolicy::class,
