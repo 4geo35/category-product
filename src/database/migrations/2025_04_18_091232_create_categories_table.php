@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string("short")->nullable();
             $table->text("description")->nullable();
             $table->unsignedBigInteger("priority")->default(0);
+            $table->dateTime("published_at")->nullable();
             $table->timestamps();
         });
     }
