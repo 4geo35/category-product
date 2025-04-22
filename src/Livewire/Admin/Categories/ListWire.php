@@ -1,6 +1,6 @@
 <?php
 
-namespace GIS\CategoryProduct\Livewire\Admin;
+namespace GIS\CategoryProduct\Livewire\Admin\Categories;
 
 use GIS\CategoryProduct\Facades\CategoryActions;
 use GIS\CategoryProduct\Interfaces\CategoryInterface;

@@ -22,7 +22,7 @@
                 <x-tt::notifications.success />
             </div>
             <div class="overflow-x-auto beautify-scrollbar" drag-category-root>
-                @include("tt::admin.draggable-tree", ["tree" => $tree])
+                @include("tt::admin.draggable-tree", ["tree" => $tree, "showUrl" => "admin.categories.show"])
             </div>
         </div>
     </div>
