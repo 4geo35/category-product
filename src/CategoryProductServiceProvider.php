@@ -5,7 +5,9 @@ namespace GIS\CategoryProduct;
 use GIS\CategoryProduct\Helpers\CategoryActionsManager;
 use GIS\CategoryProduct\Interfaces\CategoryInterface;
 use GIS\CategoryProduct\Models\Category;
+use GIS\CategoryProduct\Models\Product;
 use GIS\CategoryProduct\Observers\CategoryObserver;
+use GIS\CategoryProduct\Observers\ProductObserver;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use GIS\CategoryProduct\Livewire\Admin\Categories\ListWire as CategoryListWire;
@@ -90,6 +92,11 @@ class CategoryProductServiceProvider extends ServiceProvider
             "key" => $cp["categoryPolicyKey"],
             "policy" => $cp["categoryPolicy"],
         ];
+        $permissions[] = [
+            "title" => $cp["productPolicyTitle"],
+            "key" => $cp["productPolicyKey"],
+            "policy" => $cp["productPolicy"],
+        ];
         app()->config["user-management.permissions"] = $permissions;
     }
 
@@ -98,6 +105,10 @@ class CategoryProductServiceProvider extends ServiceProvider
         $categoryModelClass = config('category-product.customCategoryModel') ?? Category::class;
         $categoryObserverClass = config("category-product.customCategoryModelObserver") ?? CategoryObserver::class;
         $categoryModelClass::observe($categoryObserverClass);
+
+        $productModelClass = config("category-product.customProductModel") ?? Product::class;
+        $productObserverClass = config("category-product.customProductModelObserver") ?? ProductObserver::class;
+        $productModelClass::observe($productObserverClass);
     }
 
     protected function listenEvents(): void

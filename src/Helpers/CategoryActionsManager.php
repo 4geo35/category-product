@@ -26,7 +26,14 @@ class CategoryActionsManager
             ]);
         }
         // TODO: does need make a queue?
-        // TODO: disable products
+        $products = $category->products()
+            ->whereNotNull("published_at")
+            ->get();
+        foreach ($products as $product) {
+            $product->update([
+                "published_at" => null,
+            ]);
+        }
     }
 
     protected function expandItemData(&$data, ShouldTreeInterface $category): void

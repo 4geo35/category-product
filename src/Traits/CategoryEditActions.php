@@ -116,7 +116,12 @@ trait CategoryEditActions
             $this->closeDelete();
             return;
         }
-        // TODO: check products
+
+        if ($category->products->count()) {
+            session()->flash("error", "Невозможно удалить категорию, у которой есть товары");
+            $this->closeDelete();
+            return;
+        }
 
         try {
             $category->delete();

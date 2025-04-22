@@ -11,6 +11,7 @@ use GIS\TraitsHelpers\Traits\ShouldMarkdown;
 use GIS\TraitsHelpers\Traits\ShouldSlug;
 use GIS\TraitsHelpers\Traits\ShouldTree;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model implements CategoryInterface
 {
@@ -24,4 +25,10 @@ class Category extends Model implements CategoryInterface
         "priority",
         "published_at",
     ];
+
+    public function products(): HasMany
+    {
+        $productClass = config("category-product.customProductModel") ?? Product::class;
+        return $this->hasMany($productClass, "category_id");
+    }
 }
