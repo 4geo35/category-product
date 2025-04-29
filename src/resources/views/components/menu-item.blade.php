@@ -20,3 +20,11 @@
         Категории товаров
     </x-tt::admin-menu.item>
 @endcan
+
+@can("viewAny", config("category-product.customProductModel") ?? \GIS\CategoryProduct\Models\Product::class)
+    <x-tt::admin-menu.item href="{{ route('admin.products.index') }}"
+                            :active="$productActive">
+        <x-slot name="ico"><x-cp::ico.inventory /></x-slot>
+        Товары
+    </x-tt::admin-menu.item>
+@endcan

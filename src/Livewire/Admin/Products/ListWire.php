@@ -40,7 +40,7 @@ class ListWire extends Component
         if ($this->category) { $query = $this->category->products(); }
         else {
             $productModelClass = config("category-product.customProductModel") ?? Product::class;
-            $query = $productModelClass::query();
+            $query = $productModelClass::query()->with("category");
         }
         BuilderActions::extendLike($query, $this->searchTitle, "title");
         BuilderActions::extendPublished($query, $this->searchPublished);
