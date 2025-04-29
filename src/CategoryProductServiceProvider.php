@@ -4,6 +4,7 @@ namespace GIS\CategoryProduct;
 
 use GIS\CategoryProduct\Helpers\CategoryActionsManager;
 use GIS\CategoryProduct\Interfaces\CategoryInterface;
+use GIS\CategoryProduct\Interfaces\ProductInterface;
 use GIS\CategoryProduct\Models\Category;
 use GIS\CategoryProduct\Models\Product;
 use GIS\CategoryProduct\Observers\CategoryObserver;
@@ -65,6 +66,9 @@ class CategoryProductServiceProvider extends ServiceProvider
     {
         $categoryModelClass = config('category-product.customCategoryModel') ?? Category::class;
         $this->app->bind(CategoryInterface::class, $categoryModelClass);
+
+        $productModelClass = config('category-product.customProductModel') ?? Product::class;
+        $this->app->bind(ProductInterface::class, $productModelClass);
     }
 
     protected function addLivewireComponents(): void
