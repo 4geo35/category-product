@@ -7,13 +7,14 @@ use GIS\Fileable\Traits\ShouldGallery;
 use GIS\Metable\Traits\ShouldMeta;
 use GIS\TraitsHelpers\Traits\ShouldHumanDate;
 use GIS\TraitsHelpers\Traits\ShouldHumanPublishDate;
+use GIS\TraitsHelpers\Traits\ShouldMarkdown;
 use GIS\TraitsHelpers\Traits\ShouldSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Product extends Model implements ProductInterface
 {
-    use ShouldSlug, ShouldGallery, ShouldMeta, ShouldHumanDate, ShouldHumanPublishDate;
+    use ShouldSlug, ShouldGallery, ShouldMeta, ShouldHumanDate, ShouldHumanPublishDate, ShouldMarkdown;
 
     protected $fillable = [
         "title",

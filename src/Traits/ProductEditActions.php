@@ -78,10 +78,10 @@ trait ProductEditActions
         session()->flash("product-success", "Товар успешно обновлен");
         $this->closeData();
         if (method_exists($this, 'resetPage')) { $this->resetPage(); }
-        if (isset($this->prduct)) {
-            $this->prduct->fresh();
+        if (isset($this->product)) {
+            $this->product->fresh();
             if ($slugHasChanged) {
-                $this->redirectRoute("admin.products.show", ["product" => $this->prduct]);
+                $this->redirectRoute("admin.products.show", ["product" => $this->product]);
             }
         }
     }
@@ -123,7 +123,7 @@ trait ProductEditActions
 
         $this->closeDelete();
         if (method_exists($this, 'resetPage')) { $this->resetPage(); }
-        if (isset($this->prduct)) {
+        if (isset($this->product)) {
             $this->redirectRoute("admin.categories.show", ["category" => $category]);
         }
     }
@@ -139,7 +139,7 @@ trait ProductEditActions
         $product->update([
             "published_at" => $product->published_at ? null : now(),
         ]);
-        if (isset($this->prduct)) { $this->prduct->fresh(); }
+        if (isset($this->product)) { $this->product->fresh(); }
     }
 
     protected function findModel(): ?ProductInterface

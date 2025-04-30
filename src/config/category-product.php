@@ -18,6 +18,7 @@ return [
     "customAdminCategoryShowComponent" => null,
 
     "customAdminProductListComponent" => null,
+    "customAdminProductShowComponent" => null,
 
     // Policy
     "categoryPolicyTitle" => "Управление категориями товаров",

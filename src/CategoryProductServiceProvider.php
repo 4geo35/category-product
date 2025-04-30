@@ -14,6 +14,7 @@ use Livewire\Livewire;
 use GIS\CategoryProduct\Livewire\Admin\Categories\ListWire as AdminCategoryListWire;
 use GIS\CategoryProduct\Livewire\Admin\Categories\ShowWire as AdminCategoryShowWire;
 use GIS\CategoryProduct\Livewire\Admin\Products\ListWire as AdminProductListWire;
+use GIS\CategoryProduct\Livewire\Admin\Products\ShowWire as AdminProductShowWire;
 
 class CategoryProductServiceProvider extends ServiceProvider
 {
@@ -89,6 +90,12 @@ class CategoryProductServiceProvider extends ServiceProvider
         Livewire::component(
             "cp-admin-product-list",
             $component ?? AdminProductListWire::class
+        );
+
+        $component = config("category-product.customAdminProductShowComponent");
+        Livewire::component(
+            "cp-admin-product-show",
+            $component ?? AdminProductShowWire::class
         );
     }
 

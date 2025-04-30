@@ -27,7 +27,7 @@
                 <td>
                     <div class="flex items-center justify-center">
                         @can("viewAny", $item::class)
-                            <a href="{{ route('admin.services.show', ['service' => $item]) }}"
+                            <a href="{{ route('admin.products.show', ['product' => $item]) }}"
                                class="btn btn-primary px-btn-ico-text rounded-e-none">
                                 <x-tt::ico.eye />
                             </a>

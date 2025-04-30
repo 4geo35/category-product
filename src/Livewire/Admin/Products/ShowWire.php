@@ -53,7 +53,7 @@ class ShowWire extends Component
 
     public function confirmChose(): void
     {
-        if (! $this->checkAuth("update", $this->chosenCategory)) { return; }
+        if (! $this->checkAuth("update", $this->product)) { return; }
         $this->product->category()->associate($this->chosenCategory);
         $this->product->save();
         $this->product->fresh();
