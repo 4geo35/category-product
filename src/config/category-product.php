@@ -8,7 +8,11 @@ return [
     "customProductModel" => null,
     "customProductModelObserver" => null,
 
+    "customSpecificationGroupModel" => null,
+    "customSpecificationGroupModelObserver" => null,
+
     "customAdminCategoryController" => null,
+    "customAdminProductController" => null,
 
     // Facades
     "customCategoryActionsManager" => null,
