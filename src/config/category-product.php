@@ -19,6 +19,8 @@ return [
 
     "customAdminCategoryController" => null,
     "customAdminProductController" => null,
+    "customAdminSpecificationController" => null,
+    "customAdminSpecificationGroupController" => null,
 
     // Facades
     "customCategoryActionsManager" => null,
@@ -38,4 +40,12 @@ return [
     "productPolicyTitle" => "Управление товарами",
     "productPolicy" => \GIS\CategoryProduct\Policies\ProductPolicy::class,
     "productPolicyKey" => "products",
+
+    "specificationPolicyTitle" => "Управление характеристиками",
+    "specificationPolicy" => \GIS\CategoryProduct\Policies\SpecificationPolicy::class,
+    "specificationPolicyKey" => "specifications",
+
+    "specificationGroupPolicyTitle" => "Управление группами характеристик",
+    "specificationGroupPolicy" => \GIS\CategoryProduct\Policies\SpecificationGroupPolicy::class,
+    "specificationGroupPolicyKey" => "specification_groups",
 ];

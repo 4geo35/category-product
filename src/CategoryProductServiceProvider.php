@@ -121,6 +121,16 @@ class CategoryProductServiceProvider extends ServiceProvider
             "key" => $cp["productPolicyKey"],
             "policy" => $cp["productPolicy"],
         ];
+        $permissions[] = [
+            "title" => $cp["specificationPolicyTitle"],
+            "key" => $cp["specificationPolicyKey"],
+            "policy" => $cp["specificationPolicy"],
+        ];
+        $permissions[] = [
+            "title" => $cp["specificationGroupPolicyTitle"],
+            "key" => $cp["specificationGroupPolicyKey"],
+            "policy" => $cp["specificationGroupPolicy"],
+        ];
         app()->config["user-management.permissions"] = $permissions;
     }
 
