@@ -9,11 +9,11 @@ use Illuminate\Contracts\Routing\UrlRoutable;
 use Illuminate\Contracts\Support\Arrayable;
 use Illuminate\Contracts\Support\CanBeEscapedWhenCastToString;
 use Illuminate\Contracts\Support\Jsonable;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use JsonSerializable;
 use Stringable;
-interface SpecificationGroupInterface extends Arrayable, ArrayAccess, CanBeEscapedWhenCastToString, HasBroadcastChannel,
+interface SpecificationInterface extends Arrayable, ArrayAccess, CanBeEscapedWhenCastToString, HasBroadcastChannel,
     Jsonable, JsonSerializable, QueueableEntity, Stringable, UrlRoutable
 {
-    public function specifications(): HasMany;
+    public function group(): BelongsTo;
 }

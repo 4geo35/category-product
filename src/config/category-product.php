@@ -11,6 +11,9 @@ return [
     "customSpecificationGroupModel" => null,
     "customSpecificationGroupModelObserver" => null,
 
+    "customSpecificationModel" => null,
+    "customSpecificationModelObserver" => null,
+
     "customAdminCategoryController" => null,
     "customAdminProductController" => null,
 

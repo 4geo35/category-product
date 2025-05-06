@@ -3,6 +3,7 @@
 namespace GIS\CategoryProduct\Observers;
 
 use GIS\CategoryProduct\Interfaces\SpecificationGroupInterface;
+use GIS\CategoryProduct\Interfaces\SpecificationInterface;
 use GIS\CategoryProduct\Models\SpecificationGroup;
 
 class SpecificationGroupObserver
@@ -19,6 +20,12 @@ class SpecificationGroupObserver
 
     public function deleted(SpecificationGroupInterface $group): void
     {
-        // TODO: disassociate specifications
+        foreach ($group->specifications as $specification) {
+            /**
+             * @var SpecificationInterface $specification
+             */
+            $specification->group()->disassociate();
+            $specification->save();
+        }
     }
 }
