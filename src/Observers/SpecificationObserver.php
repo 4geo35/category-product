@@ -29,7 +29,9 @@ class SpecificationObserver
 
     public function deleted(SpecificationInterface $specification): void
     {
-        // TODO: clear values
+        foreach ($specification->values as $value) {
+            $value->delete();
+        }
         // TODO: clear collection
     }
 }

@@ -6,6 +6,7 @@ use GIS\CategoryProduct\Interfaces\SpecificationInterface;
 use GIS\TraitsHelpers\Traits\ShouldSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Specification extends Model implements SpecificationInterface
 {
@@ -25,7 +26,16 @@ class Specification extends Model implements SpecificationInterface
         return $this->belongsTo($groupModel, "group_id");
     }
 
-    // TODO: add values
+    public function values(): HasMany
+    {
+        $valueModelClass = config("category-product.customSpecificationValueModel") ?? SpecificationValue::class;
+        return $this->hasMany($valueModelClass, "specification_id");
+    }
 
-    // TODO: add products
+    public function products(): HasMany
+    {
+        return $this->values()
+            ->select("id", "value", "specification_id", "product_id")
+            ->with("product:id,title,slug");
+    }
 }

@@ -11,6 +11,7 @@ use GIS\TraitsHelpers\Traits\ShouldMarkdown;
 use GIS\TraitsHelpers\Traits\ShouldSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model implements ProductInterface
 {
@@ -29,4 +30,13 @@ class Product extends Model implements ProductInterface
         $categoryClass = config("category-product.customCategoryModel") ?? Category::class;
         return $this->belongsTo($categoryClass, "category_id");
     }
+
+    public function specifications(): HasMany
+    {
+        $valueModelClass = config("category-product.customSpecificationValueModel") ?? SpecificationValue::class;
+        return $this->hasMany($valueModelClass, "product_id");
+    }
+
+    // TODO: variations
+    // TODO: order items
 }

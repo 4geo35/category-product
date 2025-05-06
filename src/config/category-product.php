@@ -14,6 +14,9 @@ return [
     "customSpecificationModel" => null,
     "customSpecificationModelObserver" => null,
 
+    "customSpecificationValueModel" => null,
+    "customSpecificationValueModelObserver" => null,
+
     "customAdminCategoryController" => null,
     "customAdminProductController" => null,
 

@@ -8,7 +8,7 @@ class ProductObserver
 {
     public function created(ProductInterface $product): void
     {
-        // TODO: forget category cache
+        $this->forgetCategoryCache($product);
     }
 
     public function updated(ProductInterface $product): void
@@ -23,13 +23,27 @@ class ProductObserver
 
         // TODO: forget teaser data
         if ($product->wasChanged("published_at")) {
-            // TODO: forget category cache
+            $this->forgetCategoryCache($product);
         }
     }
 
     public function deleted(ProductInterface $product): void
     {
         // TODO: forget teaser data
-        // TODO: clear specifications
+        $this->forgetCategoryCache($product);
+
+        foreach ($product->specifications as $specification) {
+            $specification->delete();
+        }
+
+        // TODO: check variations
+    }
+
+    protected function forgetCategoryCache(ProductInterface $product): void
+    {
+        $category = $product->category;
+        // TODO: forget spec values
+        // TODO: forget pids
+        // TODO: check variation
     }
 }

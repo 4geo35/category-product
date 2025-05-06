@@ -9,10 +9,12 @@ use GIS\CategoryProduct\Models\Category;
 use GIS\CategoryProduct\Models\Product;
 use GIS\CategoryProduct\Models\Specification;
 use GIS\CategoryProduct\Models\SpecificationGroup;
+use GIS\CategoryProduct\Models\SpecificationValue;
 use GIS\CategoryProduct\Observers\CategoryObserver;
 use GIS\CategoryProduct\Observers\ProductObserver;
 use GIS\CategoryProduct\Observers\SpecificationGroupObserver;
 use GIS\CategoryProduct\Observers\SpecificationObserver;
+use GIS\CategoryProduct\Observers\SpecificationValueObserver;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use GIS\CategoryProduct\Livewire\Admin\Categories\ListWire as AdminCategoryListWire;
@@ -139,6 +141,10 @@ class CategoryProductServiceProvider extends ServiceProvider
         $specificationModelClass = config("category-product.customSpecificationModel") ?? Specification::class;
         $specificationObserverClass = config("category-product.customSpecificationModelObserver") ?? SpecificationObserver::class;
         $specificationModelClass::observe($specificationObserverClass);
+
+        $valueModelClass = config("category-product.customSpecificationValueModel") ?? SpecificationValue::class;
+        $valueObserverClass = config("category-product.customSpecificationValueModelObserver") ?? SpecificationValueObserver::class;
+        $valueModelClass::observe($valueObserverClass);
     }
 
     protected function listenEvents(): void
