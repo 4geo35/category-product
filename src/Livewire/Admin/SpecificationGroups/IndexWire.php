@@ -43,19 +43,14 @@ class IndexWire extends Component
         ];
     }
 
-    public function updated($property): void
-    {
-        if ($property === "searchTitle") {
-            $this->hasSearch = ! empty($this->searchTitle);
-        }
-    }
-
     public function render(): View
     {
+        $this->hasSearch = false;
         $groupModelClass = config("category-product.customSpecificationGroupModel") ?? SpecificationGroup::class;
         $query = $groupModelClass::query()
             ->select("id", "title");
         BuilderActions::extendLike($query, $this->searchTitle, "title");
+        if (! empty($this->searchTitle)) { $this->hasSearch = true; }
         $groups = $query->orderBy("priority")->get();
         return view("cp::livewire.admin.specification-groups.index-wire", compact("groups"));
     }
@@ -90,6 +85,7 @@ class IndexWire extends Component
         ]);
         session()->flash("success", "Группа успешно добавлена");
         $this->closeData();
+        $this->dispatch("update-list");
     }
 
     public function showEdit(int $groupId): void
@@ -124,7 +120,7 @@ class IndexWire extends Component
         $group = $this->findModel();
         if (! $group) return;
         if (! $this->checkAuth("delete", $group)) { return; }
-        $this->displayData = true;
+        $this->displayDelete = true;
     }
 
     public function confirmDelete(): void
@@ -135,11 +131,12 @@ class IndexWire extends Component
         $group->delete();
         session()->flash("success", "Группа успешно удалена");
         $this->closeDelete();
+        $this->dispatch("update-list");
     }
 
     public function closeDelete(): void
     {
-        $this->displayData = false;
+        $this->displayDelete = false;
         $this->resetFields();
     }
 
