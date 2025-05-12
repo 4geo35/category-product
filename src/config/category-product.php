@@ -32,7 +32,9 @@ return [
     "customAdminProductListComponent" => null,
     "customAdminProductShowComponent" => null,
 
-    "customAdminSpecificationGroupListComponent" => null,
+    "customAdminSpecificationGroupIndexComponent" => null,
+
+    "customAdminSpecificationIndexComponent" => null,
 
     // Policy
     "categoryPolicyTitle" => "Управление категориями товаров",
