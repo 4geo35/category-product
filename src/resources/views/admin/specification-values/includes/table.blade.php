@@ -15,7 +15,9 @@
                         {{ $item->title }}
                     </a>
                 </td>
-                <td>{{ $item->value }}</td>
+                <td>
+                    @include("cp::admin.specification-values.includes.render-value")
+                </td>
                 <td>
                     <div class="flex justify-center">
                         <button type="button" class="btn btn-dark px-btn-x-ico rounded-e-none"

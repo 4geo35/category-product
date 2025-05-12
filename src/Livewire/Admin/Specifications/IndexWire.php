@@ -67,6 +67,7 @@ class IndexWire extends Component
 
     public function render(): View
     {
+        $this->setGroupList();
         $this->hasSearch = ! empty($this->searchTitle);
         $specificationModelClass = config("category-product.customSpecificationModel") ?? Specification::class;
         $query = $specificationModelClass::query()

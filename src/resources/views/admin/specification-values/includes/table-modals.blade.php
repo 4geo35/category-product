@@ -13,8 +13,8 @@
                 </label>
                 <select class="form-select {{ $errors->has('specificationId') ? 'border-danger' : '' }}"
                         id="specificationId" required
-                        wire:model="specificationId"
-                        wire:loading.attr="disabled">
+                        wire:model.live="specificationId"
+                        @if ($valueId) disabled @else wire:loading.attr="disabled" @endif>
                     <option value="">Выберите характеристику</option>
                     @foreach($specificationList as $item)
                         <option value="{{ $item->id }}" wire:key="{{ $item->id }}">
@@ -25,17 +25,7 @@
                 <x-tt::form.error name="specificationId" />
             </div>
 
-            <div>
-                <label for="sValue" class="inline-block mb-2">
-                    Значение<span class="text-danger">*</span>
-                </label>
-                <input type="text" id="sValue"
-                       class="form-control {{ $errors->has("value") ? "border-danger" : "" }}"
-                       required
-                       wire:loading.attr="disabled"
-                       wire:model="value">
-                <x-tt::form.error name="value"/>
-            </div>
+            @include("cp::admin.specification-values.includes.value-fields")
 
             <div class="flex items-center space-x-indent-half">
                 <button type="button" class="btn btn-outline-dark" wire:click="closeData">
