@@ -23,6 +23,7 @@ use GIS\CategoryProduct\Livewire\Admin\Products\ListWire as AdminProductListWire
 use GIS\CategoryProduct\Livewire\Admin\Products\ShowWire as AdminProductShowWire;
 use GIS\CategoryProduct\Livewire\Admin\SpecificationGroups\IndexWire as AdminGroupIndexWire;
 use GIS\CategoryProduct\Livewire\Admin\Specifications\IndexWire as AdminSpecificationIndexWire;
+use GIS\CategoryProduct\Livewire\Admin\SpecificationValues\ListWire as AdminSpecificationValueListWire;
 
 class CategoryProductServiceProvider extends ServiceProvider
 {
@@ -116,6 +117,12 @@ class CategoryProductServiceProvider extends ServiceProvider
         Livewire::component(
             "cp-admin-specification-index",
             $component ?? AdminSpecificationIndexWire::class
+        );
+
+        $component = config("category-product.customAdminSpecificationValueListComponent");
+        Livewire::component(
+            "cp-admin-specification-value-list",
+            $component ?? AdminSpecificationValueListWire::class
         );
     }
 

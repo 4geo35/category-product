@@ -36,7 +36,7 @@
                 <td>{{ $item->in_filter ? "Да" : "Нет" }}</td>
                 <td>
                     @if ($item->products->count() > 0)
-                        <button type="button" class="text-info hover:text-info-hover"
+                        <button type="button" class="text-info hover:text-info-hover cursor-pointer"
                                 wire:click="showProducts({{ $item->id }})">
                             {{ $item->products->count() }}
                         </button>

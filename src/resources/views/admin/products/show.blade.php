@@ -5,6 +5,7 @@
     <div class="space-y-indent">
         <livewire:cp-admin-product-show :product="$product" />
         <livewire:fa-images :model="$product" />
+        <livewire:cp-admin-specification-value-list :product="$product" />
         <livewire:ma-metas :model="$product" />
     </div>
 </x-admin-layout>
