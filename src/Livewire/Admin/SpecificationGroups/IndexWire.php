@@ -142,6 +142,7 @@ class IndexWire extends Component
 
     public function reorderItems(array $newOrder): void
     {
+        if (! $this->checkAuth("order")) { return; }
         foreach ($newOrder as $priority => $id) {
             $this->groupId = $id;
             $group = $this->findModel();

@@ -1,6 +1,13 @@
 <?php
 
 return [
+    // Settings
+    "specificationTypes" => [
+        "checkbox" => "Checkbox",
+        "select" => "Select",
+        "color" => "Цвет",
+    ],
+
     // Admin
     "customCategoryModel" => null,
     "customCategoryModelObserver" => null,
