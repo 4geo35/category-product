@@ -8,6 +8,9 @@ return [
         "color" => "Цвет",
     ],
 
+    // Web
+    "customWebCatalogController" => null,
+
     // Admin
     "customCategoryModel" => null,
     "customCategoryModelObserver" => null,
@@ -31,6 +34,7 @@ return [
 
     // Facades
     "customCategoryActionsManager" => null,
+    "customProductActionsManager" => null,
 
     // Components
     "customAdminCategoryListComponent" => null,

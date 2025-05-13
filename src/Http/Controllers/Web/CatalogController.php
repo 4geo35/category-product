@@ -4,6 +4,7 @@ namespace GIS\CategoryProduct\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use GIS\CategoryProduct\Facades\CategoryActions;
+use GIS\CategoryProduct\Facades\ProductActions;
 use GIS\CategoryProduct\Interfaces\CategoryInterface;
 use GIS\CategoryProduct\Interfaces\ProductInterface;
 use GIS\CategoryProduct\Models\Category;
@@ -42,8 +43,7 @@ class CatalogController extends Controller
         $parents = CategoryActions::getParents($product->category);
         $metas = MetaActions::renderByModel($product);
         $images = $product->images()->orderBy("priority")->get();
-        // TODO: specifications
-        $specificationData = [];
+        $specificationData = ProductActions::getSpecificationsByGroup($product);
         return view(
             "cp::web.catalog.product",
             compact("product", "parents", "metas", "images", "specificationData")

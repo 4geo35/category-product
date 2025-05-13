@@ -3,6 +3,7 @@
 namespace GIS\CategoryProduct;
 
 use GIS\CategoryProduct\Helpers\CategoryActionsManager;
+use GIS\CategoryProduct\Helpers\ProductActionsManager;
 use GIS\CategoryProduct\Interfaces\CategoryInterface;
 use GIS\CategoryProduct\Interfaces\ProductInterface;
 use GIS\CategoryProduct\Models\Category;
@@ -69,6 +70,11 @@ class CategoryProductServiceProvider extends ServiceProvider
         $this->app->singleton("category-actions", function () {
             $categoryActionsManagerClass = config("category-product.customCategoryActionsManager") ?? CategoryActionsManager::class;
             return new $categoryActionsManagerClass;
+        });
+
+        $this->app->singleton("product-actions", function () {
+            $productActionsManagerClass = config("category-product.customProductActionsManager") ?? ProductActionsManager::class;
+            return new $productActionsManagerClass;
         });
     }
 
