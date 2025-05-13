@@ -19,6 +19,7 @@ class CatalogController extends Controller
         $categories = $categoryModelClass::query()
             ->with("image")
             ->whereNull("parent_id")
+            ->whereNotNull("published_at")
             ->orderBy("priority")
             ->get();
         $metas = MetaActions::renderByPage("catalog");
@@ -27,8 +28,11 @@ class CatalogController extends Controller
 
     public function category(CategoryInterface $category): View
     {
+        if (! $category->published_at) { abort(404); }
+
         $parents = CategoryActions::getParents($category);
         $children = $category->children()
+            ->whereNotNull("published_at")
             ->orderBy("priority")
             ->get();
         $metas = MetaActions::renderByModel($category);
