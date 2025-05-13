@@ -2,6 +2,7 @@
 
 namespace GIS\CategoryProduct\Observers;
 
+use GIS\CategoryProduct\Facades\SpecificationActions;
 use GIS\CategoryProduct\Interfaces\SpecificationInterface;
 use GIS\CategoryProduct\Models\Specification;
 
@@ -19,12 +20,12 @@ class SpecificationObserver
 
     public function created(SpecificationInterface $specification): void
     {
-        // TODO: clear collection
+        SpecificationActions::clearCollection();
     }
 
     public function updated(SpecificationInterface $specification): void
     {
-        // TODO: clear collection
+        SpecificationActions::clearCollection();
     }
 
     public function deleted(SpecificationInterface $specification): void
@@ -32,6 +33,6 @@ class SpecificationObserver
         foreach ($specification->values as $value) {
             $value->delete();
         }
-        // TODO: clear collection
+        SpecificationActions::clearCollection();
     }
 }

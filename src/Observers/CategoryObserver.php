@@ -3,6 +3,7 @@
 namespace GIS\CategoryProduct\Observers;
 
 use GIS\CategoryProduct\Facades\CategoryActions;
+use GIS\CategoryProduct\Facades\ProductActions;
 use GIS\CategoryProduct\Interfaces\CategoryInterface;
 use GIS\CategoryProduct\Models\Category;
 
@@ -27,17 +28,31 @@ class CategoryObserver
         }
 
         if ($category->wasChanged("parent_id")) {
-            CategoryActions::forgetParents($category);
-            // TODO: forget spec
-            // TODO: forget children ids
-            // TODO: forget prices
-            // TODO: forget for old parent
-
             $parent = $category->parent;
+
+            CategoryActions::forgetParents($category);
+            ProductActions::forgetSpecificationValues($category);
+            CategoryActions::forgetParents($category);
+            if ($parent) {
+                CategoryActions::forgetChildrenIds($parent);
+            }
+            // TODO: forget prices
+
             if ($parent && ! $parent->published_at) {
                 $category->published_at = null;
                 $category->saveQuietly();
                 CategoryActions::cascadeShutdown($category);
+            }
+
+            $oldParent = $category->getOriginal("parent_id");
+            if (! empty($oldParent)) {
+                $categoryModelClass = config("category-product.customCategoryModel") ?? Category::class;
+                $oldCategory = $categoryModelClass::find($oldParent);
+                if (! empty($oldCategory)) {
+                    ProductActions::forgetSpecificationValues($oldCategory);
+                    CategoryActions::forgetChildrenIds($oldCategory);
+                    // TODO: forget prices
+                }
             }
         }
     }
@@ -45,7 +60,7 @@ class CategoryObserver
     public function deleted(CategoryInterface $category): void
     {
         CategoryActions::forgetParents($category);
-        // TODO: forget spec
+        ProductActions::forgetSpecificationValues($category);
         // TODO: forget prices
     }
 }

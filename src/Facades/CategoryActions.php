@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Facade;
  * @method static array getParents(CategoryInterface $category)
  * @method static void forgetParents(CategoryInterface $category)
  *
+ * @method static array getChildrenIds(CategoryInterface $category, bool $includeSelf = false)
+ * @method static void forgetChildrenIds(CategoryInterface $category)
+ *
  * @method static array getCategoryTree(array $newOrder = null)
  * @method static bool rebuildTree(array $newOrder)
  *

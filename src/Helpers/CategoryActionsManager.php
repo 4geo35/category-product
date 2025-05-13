@@ -43,6 +43,33 @@ class CategoryActionsManager
         }
     }
 
+    public function getChildrenIds(CategoryInterface $category, bool $includeSelf = false): array
+    {
+        $key = "category-actions-getChildrenIds:{$category->id}";
+        $key .= $includeSelf ? "-true" : "-false";
+        return Cache::rememberForever($key, function () use ($category, $includeSelf) {
+            $ids = [];
+            if ($includeSelf) { $ids[] = $category->id; }
+            $children = $category->children()->select("id")->get();
+            foreach ($children as $child) {
+                /**
+                 * @var CategoryInterface $child
+                 */
+                $ids[] = $child->id;
+                $ids = array_merge($ids, $this->getChildrenIds($child));
+            }
+            return array_unique($ids);
+        });
+    }
+
+    public function forgetChildrenIds(CategoryInterface $category): void
+    {
+        $key = "category-actions-getChildrenIds:{$category->id}";
+        Cache::forget("{$key}-true");
+        Cache::forget("{$key}-false");
+        if ($category->parent_id) $this->forgetChildrenIds($category->parent);
+    }
+
     public function cascadeShutdown(CategoryInterface $category): void
     {
         foreach ($category->children as $child) {

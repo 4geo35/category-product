@@ -2,6 +2,8 @@
 
 namespace GIS\CategoryProduct\Observers;
 
+use GIS\CategoryProduct\Facades\CategoryActions;
+use GIS\CategoryProduct\Facades\ProductActions;
 use GIS\CategoryProduct\Interfaces\ProductInterface;
 
 class ProductObserver
@@ -42,7 +44,7 @@ class ProductObserver
     protected function forgetCategoryCache(ProductInterface $product): void
     {
         $category = $product->category;
-        // TODO: forget spec values
+        ProductActions::forgetSpecificationValues($category);
         // TODO: forget pids
         // TODO: check variation
     }

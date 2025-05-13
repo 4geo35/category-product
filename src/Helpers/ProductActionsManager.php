@@ -2,12 +2,17 @@
 
 namespace GIS\CategoryProduct\Helpers;
 
+use GIS\CategoryProduct\Facades\CategoryActions;
+use GIS\CategoryProduct\Facades\SpecificationActions;
+use GIS\CategoryProduct\Interfaces\CategoryInterface;
 use GIS\CategoryProduct\Interfaces\ProductInterface;
 use GIS\CategoryProduct\Interfaces\SpecificationGroupInterface;
 use GIS\CategoryProduct\Interfaces\SpecificationInterface;
 use GIS\CategoryProduct\Interfaces\SpecificationValueInterface;
 use GIS\CategoryProduct\Models\SpecificationGroup;
+use GIS\CategoryProduct\Models\SpecificationValue;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\Cache;
 
 class ProductActionsManager
 {
@@ -102,5 +107,31 @@ class ProductActionsManager
             "noGroup" => $noGroup,
             "groups" => $array,
         ];
+    }
+
+    public function getSpecificationValues(CategoryInterface $category): array
+    {
+        $key = "product-actions-getSpecificationValues:{$category->id}";
+        return Cache::rememberForever($key, function () use ($category) {
+            $cIds = CategoryActions::getChildrenIds($category, true);
+            $valueModelClass = config("category-product.customSpecificationValueModel") ?? SpecificationValue::class;
+            $values = $valueModelClass::query()
+                ->leftJoin("products", "products.id", "=", "specification_values.product_id")
+                ->select("specification_values.specification_id", "specification_values.value")
+                ->whereNotNull("products.published_at")
+                ->whereIn("specification_values.category_id", $cIds)
+                ->orderBy("specification_values.product_id")
+                ->get();
+
+            return SpecificationActions::formatCollection($values);
+        });
+    }
+
+    public function forgetSpecificationValues(CategoryInterface $category): void
+    {
+        Cache::forget("product-actions-getSpecificationValues:{$category->id}");
+        if (! empty($category->parent_id)) {
+            $this->forgetSpecificationValues($category->parent);
+        }
     }
 }

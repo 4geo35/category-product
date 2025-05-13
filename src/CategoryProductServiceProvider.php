@@ -4,6 +4,8 @@ namespace GIS\CategoryProduct;
 
 use GIS\CategoryProduct\Helpers\CategoryActionsManager;
 use GIS\CategoryProduct\Helpers\ProductActionsManager;
+use GIS\CategoryProduct\Helpers\ProductFiltersActionsManager;
+use GIS\CategoryProduct\Helpers\SpecificationActionsManager;
 use GIS\CategoryProduct\Interfaces\CategoryInterface;
 use GIS\CategoryProduct\Interfaces\ProductInterface;
 use GIS\CategoryProduct\Models\Category;
@@ -25,6 +27,8 @@ use GIS\CategoryProduct\Livewire\Admin\Products\ShowWire as AdminProductShowWire
 use GIS\CategoryProduct\Livewire\Admin\SpecificationGroups\IndexWire as AdminGroupIndexWire;
 use GIS\CategoryProduct\Livewire\Admin\Specifications\IndexWire as AdminSpecificationIndexWire;
 use GIS\CategoryProduct\Livewire\Admin\SpecificationValues\ListWire as AdminSpecificationValueListWire;
+use GIS\CategoryProduct\Livewire\Web\Catalog\ProductListWire;
+use GIS\CategoryProduct\Livewire\Web\Catalog\CategoryFilterWire;
 
 class CategoryProductServiceProvider extends ServiceProvider
 {
@@ -75,6 +79,16 @@ class CategoryProductServiceProvider extends ServiceProvider
         $this->app->singleton("product-actions", function () {
             $productActionsManagerClass = config("category-product.customProductActionsManager") ?? ProductActionsManager::class;
             return new $productActionsManagerClass;
+        });
+
+        $this->app->singleton("product-filter-actions", function () {
+            $filterActionsManagerClass = config("category-product.customProductFilterActionsManager") ?? ProductFiltersActionsManager::class;
+            return new $filterActionsManagerClass;
+        });
+
+        $this->app->singleton("specification-actions", function () {
+            $specificationActionsManagerClass = config("category-product.customSpecificationActionsManager") ?? SpecificationActionsManager::class;
+            return new $specificationActionsManagerClass;
         });
     }
 
@@ -129,6 +143,18 @@ class CategoryProductServiceProvider extends ServiceProvider
         Livewire::component(
             "cp-admin-specification-value-list",
             $component ?? AdminSpecificationValueListWire::class
+        );
+
+        $component = config("category-product.customWebProductListComponent");
+        Livewire::component(
+            "cp-product-list",
+            $component ?? ProductListWire::class
+        );
+
+        $component = config("category-product.customWebCategoryFilterComponent");
+        Livewire::component(
+            "cp-category-filter",
+            $component ?? CategoryFilterWire::class
         );
     }
 
