@@ -2,6 +2,7 @@
 
 namespace GIS\CategoryProduct\Observers;
 
+use GIS\CategoryProduct\Facades\ProductActions;
 use GIS\CategoryProduct\Interfaces\SpecificationValueInterface;
 
 class SpecificationValueObserver
@@ -29,6 +30,6 @@ class SpecificationValueObserver
     protected function forgetValuesCache(SpecificationValueInterface $value): void
     {
         $category = $value->category;
-        // TODO: forget cache
+        ProductActions::forgetSpecificationValues($category);
     }
 }

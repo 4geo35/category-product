@@ -27,8 +27,6 @@ class CategoryFilterWire extends Component
 
     public function render(): View
     {
-        debugbar()->info($this->filters);
-        debugbar()->info($this->filterItems);
         // Для range слайдера, иначе он увидит изменения только в одном из фильтров
         $this->dispatch("filter-ready-for-render");
         return view("cp::livewire.web.catalog.category-filter-wire");
@@ -57,8 +55,15 @@ class CategoryFilterWire extends Component
 
     protected function setFilterItems(): void
     {
+        // Так было раньше
         $result = [];
         parse_str($this->query, $result);
+
+        // Пробуем брать из запроса напрямую
+        $queryArray = request()->query();
+        if (! empty($queryArray["f"])) { $result = $queryArray["f"]; }
+        else { $result = []; }
+
         foreach ($this->filters as $item) {
             if (! empty($result[$item->slug])) {
                 $value = $result[$item->slug];
