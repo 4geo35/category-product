@@ -8,6 +8,7 @@ use GIS\CategoryProduct\Helpers\ProductFiltersActionsManager;
 use GIS\CategoryProduct\Helpers\SpecificationActionsManager;
 use GIS\CategoryProduct\Interfaces\CategoryInterface;
 use GIS\CategoryProduct\Interfaces\ProductInterface;
+use GIS\CategoryProduct\Livewire\Web\Catalog\CheckboxFilterWire;
 use GIS\CategoryProduct\Models\Category;
 use GIS\CategoryProduct\Models\Product;
 use GIS\CategoryProduct\Models\Specification;
@@ -155,6 +156,12 @@ class CategoryProductServiceProvider extends ServiceProvider
         Livewire::component(
             "cp-category-filter",
             $component ?? CategoryFilterWire::class
+        );
+
+        $component = config("category-product.customWebCheckboxFilterComponent");
+        Livewire::component(
+            "cp-checkbox-filter",
+            $component ?? CheckboxFilterWire::class
         );
     }
 

@@ -14,6 +14,9 @@ return [
     "useH1" => true,
     "catalogPageTitle" => "Каталог",
 
+    // Filters
+    "checkboxShowCount" => 3,
+
     // Sort
     "defaultSort" => "title",
     "defaultSortDirection" => "asc",
@@ -87,6 +90,7 @@ return [
 
     "customWebProductListComponent" => null,
     "customWebCategoryFilterComponent" => null,
+    "customWebCheckboxFilterComponent" => null,
 
     // Policy
     "categoryPolicyTitle" => "Управление категориями товаров",
