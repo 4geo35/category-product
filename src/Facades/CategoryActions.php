@@ -7,6 +7,9 @@ use GIS\CategoryProduct\Interfaces\CategoryInterface;
 use Illuminate\Support\Facades\Facade;
 
 /**
+ * @method static array getParents(CategoryInterface $category)
+ * @method static void forgetParents(CategoryInterface $category)
+ *
  * @method static array getCategoryTree(array $newOrder = null)
  * @method static bool rebuildTree(array $newOrder)
  *

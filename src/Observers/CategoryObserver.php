@@ -27,6 +27,12 @@ class CategoryObserver
         }
 
         if ($category->wasChanged("parent_id")) {
+            CategoryActions::forgetParents($category);
+            // TODO: forget spec
+            // TODO: forget children ids
+            // TODO: forget prices
+            // TODO: forget for old parent
+
             $parent = $category->parent;
             if ($parent && ! $parent->published_at) {
                 $category->published_at = null;
@@ -34,5 +40,12 @@ class CategoryObserver
                 CategoryActions::cascadeShutdown($category);
             }
         }
+    }
+
+    public function deleted(CategoryInterface $category): void
+    {
+        CategoryActions::forgetParents($category);
+        // TODO: forget spec
+        // TODO: forget prices
     }
 }
