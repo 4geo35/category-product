@@ -10,6 +10,9 @@ return [
 
     // Web
     "customWebCatalogController" => null,
+    "useBreadcrumbs" => true,
+    "useH1" => true,
+    "catalogPageTitle" => "Каталог",
 
     // Admin
     "customCategoryModel" => null,

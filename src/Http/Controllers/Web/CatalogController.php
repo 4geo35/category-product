@@ -21,7 +21,8 @@ class CatalogController extends Controller
             ->whereNull("parent_id")
             ->orderBy("priority")
             ->get();
-        return view("cp::web.catalog.index", compact("categories"));
+        $metas = MetaActions::renderByPage("catalog");
+        return view("cp::web.catalog.index", compact("categories", "metas"));
     }
 
     public function category(CategoryInterface $category): View
