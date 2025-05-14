@@ -5,9 +5,9 @@ namespace GIS\CategoryProduct\Livewire\Web\Catalog;
 use GIS\CategoryProduct\Traits\CheckLikeFilterTrait;
 use Livewire\Component;
 
-class CheckboxFilterWire extends Component
+class ColorFilterWire extends Component
 {
     use CheckLikeFilterTrait;
 
-    public string $template = "cp::livewire.web.catalog.checkbox-filter-wire";
+    public string $template = "cp::livewire.web.catalog.color-filter-wire";
 }

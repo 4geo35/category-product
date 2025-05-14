@@ -15,13 +15,11 @@ class CategoryFilterWire extends Component
     public array $filters = [];
 
     public array $filterItems = [];
-    public string $query = '';
     public bool $isModal = false;
 
     public function mount(): void
     {
         $this->filters = ProductFiltersActions::getFilters($this->category, true);
-        if (request()->has("q")) $this->query = request()->get("q");
         $this->setFilterItems();
     }
 
@@ -34,31 +32,26 @@ class CategoryFilterWire extends Component
 
     public function applyFilters(): void
     {
-        $this->query = Arr::query($this->filterItems);
-        $this->dispatch("change-filter-query", newQuery: $this->query, isModal: $this->isModal);
+        $query = Arr::query($this->filterItems);
+        $this->dispatch("change-filter-query", newQuery: $query, isModal: $this->isModal);
     }
 
     public function resetFilters(): void
     {
-        $this->query = "";
+        $query = "";
         $this->setFilterItems();
-        $this->dispatch("change-filter-query", newQuery: $this->query, isModal: $this->isModal);
+        $this->dispatch("change-filter-query", newQuery: $query, isModal: $this->isModal);
     }
 
     #[On("change-filter-query")]
     public function updateFilters(string $newQuery, bool $isModal): void
     {
         if ($isModal == $this->isModal) return;
-        $this->query = $newQuery;
         $this->setFilterItems();
     }
 
     protected function setFilterItems(): void
     {
-        // Так было раньше
-        $result = [];
-        parse_str($this->query, $result);
-
         // Пробуем брать из запроса напрямую
         $queryArray = request()->query();
         if (! empty($queryArray["f"])) { $result = $queryArray["f"]; }
@@ -69,7 +62,6 @@ class CategoryFilterWire extends Component
                 $value = $result[$item->slug];
             } else {
                 $value = match ($item->type) {
-                    "select" => "",
                     "checkbox", "color" => [],
                     "range" => [
                         "from" => (int) $item->min,

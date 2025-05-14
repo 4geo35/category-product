@@ -15,7 +15,10 @@
                    class="form-check-input" id="{{ $item['inputId'] }}{{ $isModal ? '-modal' : '' }}"
                    value="{{ $item['value'] }}">
             <label for="{{ $item['inputId'] }}{{ $isModal ? '-modal' : '' }}" class="form-check-label">
-                {{ $item['value'] }}
+                <span class="inline-flex items-center space-x-2">
+                    <span class="w-4 h-4 rounded-full inline-block border border-stroke" style="background-color: {{ $item['color'] }}"></span>
+                    <span>{{ $item['value'] }}</span>
+                </span>
             </label>
         </div>
     @endforeach

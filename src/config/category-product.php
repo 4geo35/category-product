@@ -3,8 +3,7 @@
 return [
     // Settings
     "specificationTypes" => [
-        "checkbox" => "Checkbox",
-        "select" => "Select",
+        "checkbox" => "Список",
         "color" => "Цвет",
     ],
 
@@ -91,6 +90,7 @@ return [
     "customWebProductListComponent" => null,
     "customWebCategoryFilterComponent" => null,
     "customWebCheckboxFilterComponent" => null,
+    "customWebColorFilterComponent" => null,
 
     // Policy
     "categoryPolicyTitle" => "Управление категориями товаров",

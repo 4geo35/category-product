@@ -51,7 +51,6 @@ trait FilterView
     {
         foreach ($specInfo as $key => &$filter) {
             if ($filter->type !== "checkbox") continue;
-            $current = $this->request->get("check-{$filter->slug}", []);
             $renderValues = [];
             $i = 0;
             foreach ($filter->values as $id => $value) {
@@ -59,8 +58,30 @@ trait FilterView
                 $renderValues[] = [
                     "id" => $id,
                     "value" => $value,
-                    "checked" => in_array($value, $current),
+                    "checked" => false,
                     "inputName" => "check-{$filter->slug}[]",
+                    "inputId" => "{$id}-{$filter->slug}-{$i}",
+                ];
+            }
+            $filter->renderValues = $renderValues;
+        }
+    }
+
+    protected function prepareColorFilters(&$specInfo): void
+    {
+        foreach ($specInfo as $key => &$filter) {
+            if ($filter->type !== "color") continue;
+            $renderValues = [];
+            $i = 0;
+            foreach ($filter->values as $id => $value) {
+                $i++;
+                $exploded = explode("|", $value);
+                $renderValues[] = [
+                    "id" => $id,
+                    "value" => $exploded[1],
+                    "color" => $exploded[0],
+                    "checked" => false,
+                    "inputName" => "color-{$filter->slug}[]",
                     "inputId" => "{$id}-{$filter->slug}-{$i}",
                 ];
             }

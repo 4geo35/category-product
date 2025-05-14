@@ -2,14 +2,11 @@
     @foreach($filters as $filter)
         <div wire:key="{{ $filter->id }}">
             @switch($filter->type)
-                @case("select")
-                    <div>Select</div>
-                    @break
                 @case("checkbox")
                     <livewire:cp-checkbox-filter :data="$filter" :key="$filter->id" wire:model="filterItems.{{ $filter->slug }}" :is-modal="$isModal" />
                     @break
                 @case("color")
-                    <div>Color</div>
+                    <livewire:cp-color-filter :data="$filter" :key="$filter->id" wire:model="filterItems.{{ $filter->slug }}" :is-modal="$isModal" />
                     @break
                 @case("range")
                     <div>Range</div>

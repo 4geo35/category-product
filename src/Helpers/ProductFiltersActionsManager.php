@@ -32,7 +32,7 @@ class ProductFiltersActionsManager
         // TODO: setPriceFilter
         $this->prepareRangeFilters($specInfo);
         $this->prepareCheckboxFilters($specInfo);
-        // TODO: prepareColorFilters
+        $this->prepareColorFilters($specInfo);
         return array_values(Arr::sort($specInfo, function (object $value) {
             return $value->priority;
         }));
