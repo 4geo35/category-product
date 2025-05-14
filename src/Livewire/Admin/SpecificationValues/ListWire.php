@@ -21,39 +21,29 @@ class ListWire extends Component
     public string|null $type = null;
 
     public string $value = "";
-    public string $firstSplitValue = "";
-    public string $secondSplitValue = "";
+    public string $colorValue = "";
     public string|null $specificationId = null;
     public int|null $valueId = null;
 
     public function rules(): array
     {
-        return match ($this->type) {
-            "color" => [
-                "firstSplitValue" => ["required", "string", "max:7"],
-                "secondSplitValue" => ["required", "string", "max:50"],
-                "specificationId" => ["required", "numeric", "exists:specifications,id"],
-            ],
-            default => [
-                "value" => ["required", "string", "max:50"],
-                "specificationId" => ["required", "numeric", "exists:specifications,id"],
-            ],
-        };
+        $data = [
+            "value" => ["required", "string", "max:50"],
+            "specificationId" => ["required", "numeric", "exists:specifications,id"],
+        ];
+        if ($this->type == "color") {
+            $data["colorValue"] = ["required", "string", "max:7"];
+        }
+        return $data;
     }
 
     public function validationAttributes(): array
     {
-        return match ($this->type) {
-            "color" => [
-                "firstSplitValue" => "Значение цвета",
-                "secondSplitValue" => "Наименование цвета",
-                "specificationId" => "Характеристика",
-            ],
-            default => [
-                "value" => "Значение",
-                "specificationId" => "Характеристика",
-            ],
-        };
+        return [
+            "value" => $this->type === "color" ? "Наименование цвета" : "Значение",
+            "specificationId" => "Характеристика",
+            "colorValue" => "Значение цвета",
+        ];
     }
 
     public function updating(string $property, $value): void
@@ -94,10 +84,18 @@ class ListWire extends Component
     {
         if (! $this->checkAuth("update")) { return; }
         $this->validate();
-        $this->product->specifications()->create([
-            "value" => $this->makeValueString(),
+        $value = $this->product->specifications()->create([
+            "value" => $this->value,
             "specification_id" => $this->specificationId,
         ]);
+        /**
+         * @var SpecificationValueInterface $value
+         */
+        if ($this->type === "color") {
+            $value->color()->create([
+                "hash" => $this->colorValue,
+            ]);
+        }
         session()->flash("success", "Значение успешно добавлено");
         $this->closeData();
     }
@@ -113,7 +111,10 @@ class ListWire extends Component
         $this->specificationId = $value->specification_id;
         $this->setTypeById($this->specificationId);
         $this->displayData = true;
-        $this->setValueForEdit($value);
+        $this->value = $value->value;
+        if ($this->type === "color") {
+            $this->colorValue = $value->color->hash;
+        }
     }
 
     public function update(): void
@@ -123,8 +124,13 @@ class ListWire extends Component
         if (! $this->checkAuth("update")) { return; }
         $this->validate();
         $value->update([
-            "value" => $this->makeValueString(),
+            "value" => $this->value,
         ]);
+        if ($this->type === "color") {
+            $value->color()->update([
+                "hash" => $this->colorValue,
+            ]);
+        }
         session()->flash("success", "Значение успешно обновлено");
         $this->closeData();
     }
@@ -155,28 +161,6 @@ class ListWire extends Component
         $this->closeDelete();
     }
 
-    protected function makeValueString(): string
-    {
-        return match ($this->type) {
-            "color" => implode("|", [$this->firstSplitValue, $this->secondSplitValue]),
-            default => $this->value,
-        };
-    }
-
-    protected function setValueForEdit(SpecificationValueInterface $value): void
-    {
-        switch ($this->type) {
-            case "color":
-                $exploded = explode("|", $value->value);
-                $this->firstSplitValue = $exploded[0];
-                $this->secondSplitValue = $exploded[1];
-                break;
-            default:
-                $this->value = $value->value;
-                break;
-        }
-    }
-
     protected function setTypeById(int $specificationId): void
     {
         $specificationModelClass = config('category-product.customSpecificationModel') ?? Specification::class;
@@ -192,7 +176,7 @@ class ListWire extends Component
 
     protected function resetFields(): void
     {
-        $this->reset(["value", "specificationId", "valueId", "firstSplitValue", "secondSplitValue"]);
+        $this->reset(["value", "specificationId", "valueId", "colorValue", "type"]);
     }
 
     protected function checkAuth(string $action): bool

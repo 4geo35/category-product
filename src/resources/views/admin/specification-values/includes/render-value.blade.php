@@ -1,9 +1,9 @@
 @switch($item->specification->type)
     @case("color")
-        @php($exploded = explode("|", $item->value))
+        @php($color = $item->color)
         <div class="flex items-center justify-start space-x-2">
-            <span class="w-4 h-4 rounded-full border border-light" style="background-color: {{ $exploded[0] }}"></span>
-            <span>{{ $exploded[1] }}</span>
+            <span class="w-4 h-4 rounded-full border border-light" style="background-color: {{ $color->hash }}"></span>
+            <span>{{ $item->value }}</span>
         </div>
         @break
     @default

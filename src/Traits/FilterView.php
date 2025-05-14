@@ -78,8 +78,8 @@ trait FilterView
                 $exploded = explode("|", $value);
                 $renderValues[] = [
                     "id" => $id,
-                    "value" => $exploded[1],
-                    "color" => $exploded[0],
+                    "value" => $exploded[0],
+                    "color" => $exploded[1],
                     "checked" => false,
                     "inputName" => "color-{$filter->slug}[]",
                     "inputId" => "{$id}-{$filter->slug}-{$i}",

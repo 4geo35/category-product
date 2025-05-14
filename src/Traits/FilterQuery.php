@@ -102,28 +102,11 @@ trait FilterQuery
     {
         if ($this->slugValues[$key]["type"] !== "color") { return false; }
 
-        $colorValues = DB::table("specification_values")
-            ->select("product_id", "specification_id", "value")
-            ->whereIn("category_id", $this->categoryIds)
-            ->where("specification_id", $this->slugValues[$key]["id"])
-            ->get();
-
-        $fullColorValues = [];
-        foreach ($value as $colorTitle) {
-            $filtered = $colorValues->filter(function ($item) use ($colorTitle) {
-                return strstr($item->value, $colorTitle);
-            });
-            $result = $filtered->map(function ($item) {
-                return $item->value;
-            });
-            $fullColorValues = array_merge($fullColorValues, array_values($result->toArray()));
-        }
-
         $colors = DB::table("specification_values")
             ->select("product_id")
             ->whereIn("category_id", $this->categoryIds)
             ->where("specification_id", $this->slugValues[$key]["id"])
-            ->whereIn("value", $fullColorValues)
+            ->whereIn("value", $value)
             ->groupBy("product_id");
 
         $this->query->joinSub($colors, $key, function (JoinClause $join) use ($key) {

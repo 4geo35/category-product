@@ -63,6 +63,8 @@ return [
     "customSpecificationValueModel" => null,
     "customSpecificationValueModelObserver" => null,
 
+    "customSpecificationColorModel" => null,
+
     "customAdminCategoryController" => null,
     "customAdminProductController" => null,
     "customAdminSpecificationController" => null,

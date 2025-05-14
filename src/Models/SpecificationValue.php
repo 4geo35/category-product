@@ -5,6 +5,7 @@ namespace GIS\CategoryProduct\Models;
 use GIS\CategoryProduct\Interfaces\SpecificationValueInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class SpecificationValue extends Model implements SpecificationValueInterface
 {
@@ -31,5 +32,11 @@ class SpecificationValue extends Model implements SpecificationValueInterface
     {
         $specificationModel = config("category-product.customSpecificationModel") ?? Specification::class;
         return $this->belongsTo($specificationModel, "specification_id");
+    }
+
+    public function color(): HasOne
+    {
+        $colorModelClass = config("category-product.customSpecificationColorModel") ?? SpecificationColor::class;
+        return $this->hasOne($colorModelClass, "value_id");
     }
 }

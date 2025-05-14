@@ -25,6 +25,7 @@ class SpecificationValueObserver
     public function deleted(SpecificationValueInterface $value): void
     {
         $this->forgetValuesCache($value);
+        if ($value->color) { $value->color->delete(); }
     }
 
     protected function forgetValuesCache(SpecificationValueInterface $value): void

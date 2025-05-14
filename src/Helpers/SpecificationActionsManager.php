@@ -55,8 +55,10 @@ class SpecificationActionsManager
                 $values[$specId] = [];
             }
             if (! empty($item->value)) {
+                $value = $item->value;
+                if (! empty($item->hash)) { $value .= "|" . $item->hash; } // Это для цвета
                 $values[$specId] = array_unique(
-                    array_merge($values[$specId], Arr::wrap($item->value))
+                    array_merge($values[$specId], Arr::wrap($value))
                 );
             }
         }

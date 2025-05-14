@@ -117,7 +117,8 @@ class ProductActionsManager
             $valueModelClass = config("category-product.customSpecificationValueModel") ?? SpecificationValue::class;
             $values = $valueModelClass::query()
                 ->leftJoin("products", "products.id", "=", "specification_values.product_id")
-                ->select("specification_values.specification_id", "specification_values.value")
+                ->leftJoin("specification_colors", "specification_colors.value_id", "=", "specification_values.id")
+                ->select("specification_values.specification_id", "specification_values.value", "specification_colors.hash")
                 ->whereNotNull("products.published_at")
                 ->whereIn("specification_values.category_id", $cIds)
                 ->orderBy("specification_values.product_id")
