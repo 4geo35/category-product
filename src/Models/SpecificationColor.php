@@ -2,10 +2,11 @@
 
 namespace GIS\CategoryProduct\Models;
 
+use GIS\CategoryProduct\Interfaces\SpecificationColorInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class SpecificationColor extends Model
+class SpecificationColor extends Model implements SpecificationColorInterface
 {
     protected $fillable = [
         "hash"

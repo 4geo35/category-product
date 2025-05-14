@@ -132,6 +132,7 @@ class ListWire extends Component
         $this->value = $value->value;
         if ($this->type === "color") {
             $this->colorValue = $value->color->hash;
+            $this->disableColorHash = true;
         }
     }
 
