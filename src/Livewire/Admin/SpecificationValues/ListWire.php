@@ -16,6 +16,7 @@ class ListWire extends Component
 
     public bool $displayData = false;
     public bool $displayDelete = false;
+    public bool $disableColorHash = false;
     public array $specificationList = [];
 
     public string|null $type = null;
@@ -49,7 +50,24 @@ class ListWire extends Component
     public function updating(string $property, $value): void
     {
         if ($property === "specificationId" && ! empty($value)) {
+            $this->reset("value", "colorValue");
             $this->setTypeById($value);
+        }
+        if ($property === "value" && $this->type === "color") {
+            $valueModelClass = config("category-product.customSpecificationValueModel") ?? SpecificationValue::class;
+            $exist = $valueModelClass::query()
+                ->where("specification_id", $this->specificationId)
+                ->where("value", $value)
+                ->first();
+            if ($exist) {
+                $color = $exist->color;
+                if (! empty($color)) {
+                    $this->colorValue = $color->hash;
+                    $this->disableColorHash = true;
+                }
+            } else {
+                $this->disableColorHash = false;
+            }
         }
     }
 
@@ -176,7 +194,7 @@ class ListWire extends Component
 
     protected function resetFields(): void
     {
-        $this->reset(["value", "specificationId", "valueId", "colorValue", "type"]);
+        $this->reset(["value", "specificationId", "valueId", "colorValue", "type", "disableColorHash"]);
     }
 
     protected function checkAuth(string $action): bool

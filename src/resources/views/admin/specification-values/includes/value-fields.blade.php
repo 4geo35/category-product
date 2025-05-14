@@ -6,7 +6,7 @@
            class="form-control {{ $errors->has("value") ? "border-danger" : "" }}"
            required
            wire:loading.attr="disabled"
-           wire:model="value">
+           wire:model.blur="value">
     <x-tt::form.error name="value"/>
 </div>
 
@@ -18,7 +18,7 @@
         <input type="text" id="colorValue" maxlength="7"
                class="form-control {{ $errors->has("colorValue") ? "border-danger" : "" }}"
                required
-               wire:loading.attr="disabled"
+               @if ($disableColorHash) disabled @else wire:loading.attr="disabled" @endif
                wire:model.blur="colorValue">
         <x-tt::form.error name="colorValue"/>
         <div class="w-full h-3 rounded-base mt-1" style="background-color: {{ $colorValue }}"></div>
