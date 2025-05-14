@@ -9,6 +9,7 @@ use GIS\CategoryProduct\Traits\FilterQuery;
 use GIS\CategoryProduct\Traits\FilterView;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Arr;
 
 class ProductFiltersActionsManager
@@ -36,5 +37,14 @@ class ProductFiltersActionsManager
         return array_values(Arr::sort($specInfo, function (object $value) {
             return $value->priority;
         }));
+    }
+
+    public function filterByCategory(CategoryInterface $category): LengthAwarePaginator
+    {
+        $this->category = $category;
+        $this->request = request();
+        $this->initQuery();
+        $this->initCategoryQuery();
+        return $this->applyFilters();
     }
 }

@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Facade;
 
 /**
  * @method static array getFilters(CategoryInterface $category, bool $includeSubs = false)
+ * @method static LengthAwarePaginator filterByCategory(CategoryInterface $category)
  *
  * @see ProductFiltersActionsManager
  */

@@ -2,6 +2,7 @@
 
 namespace GIS\CategoryProduct\Livewire\Web\Catalog;
 
+use GIS\CategoryProduct\Facades\ProductFiltersActions;
 use GIS\CategoryProduct\Interfaces\CategoryInterface;
 use Illuminate\View\View;
 use Livewire\Attributes\On;
@@ -15,7 +16,6 @@ class ProductListWire extends Component
 
     public CategoryInterface $category;
     public array $sortOptions = [];
-    public string $query = "";
     public string $sortBy = "";
     public string $sortDirection = "";
     public array $filters = [];
@@ -25,7 +25,6 @@ class ProductListWire extends Component
         return [
             "sortBy" => ["as" => "sort-by", "except" => ""],
             "sortDirection" => ["as" => "sort-direction", "except" => ""],
-//            "query" => ["as" => "q", "except" => ""],
             "filters" => ["as" => "f", "except" => ""],
         ];
     }
@@ -37,7 +36,9 @@ class ProductListWire extends Component
 
     public function render(): View
     {
-        return view("cp::livewire.web.catalog.product-list-wire");
+        $products = ProductFiltersActions::filterByCategory($this->category);
+        debugbar()->info($products);
+        return view("cp::livewire.web.catalog.product-list-wire", compact("products"));
     }
 
     #[On("change-filter-query")]
@@ -49,7 +50,6 @@ class ProductListWire extends Component
         $this->filters = $result;
 
         $this->resetPage();
-        $this->query = $newQuery;
-//        request()->request->add(["q" => $newQuery]);
+        request()->request->add(["f" => $this->filters]);
     }
 }

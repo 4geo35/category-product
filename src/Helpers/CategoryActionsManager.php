@@ -50,7 +50,7 @@ class CategoryActionsManager
         return Cache::rememberForever($key, function () use ($category, $includeSelf) {
             $ids = [];
             if ($includeSelf) { $ids[] = $category->id; }
-            $children = $category->children()->select("id")->get();
+            $children = $category->children()->select("id")->whereNotNull("published_at")->get();
             foreach ($children as $child) {
                 /**
                  * @var CategoryInterface $child
