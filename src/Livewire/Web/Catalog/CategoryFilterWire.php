@@ -47,15 +47,20 @@ class CategoryFilterWire extends Component
     public function updateFilters(string $newQuery, bool $isModal): void
     {
         if ($isModal == $this->isModal) return;
-        $this->setFilterItems();
+        $this->setFilterItems($newQuery);
     }
 
-    protected function setFilterItems(): void
+    protected function setFilterItems(string $newQuery = ""): void
     {
-        // Пробуем брать из запроса напрямую
-        $queryArray = request()->query();
-        if (! empty($queryArray["f"])) { $result = $queryArray["f"]; }
-        else { $result = []; }
+        if ($newQuery) {
+            $result = [];
+            parse_str($newQuery, $result);
+        } else {
+            // Пробуем брать из запроса напрямую
+            $queryArray = request()->query();
+            if (! empty($queryArray["f"])) { $result = $queryArray["f"]; }
+            else { $result = []; }
+        }
 
         foreach ($this->filters as $item) {
             if (! empty($result[$item->slug])) {
