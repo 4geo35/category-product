@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Facade;
 
 /**
+ * @method static ProductInterface|null getTeaserData(int $id)
+ * @method static void forgetTeaserData(int $id)
+ *
  * @method static Collection getSpecifications(ProductInterface $product)
  * @method static array getSpecificationsByGroup(ProductInterface $product)
  *

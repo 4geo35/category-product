@@ -24,7 +24,7 @@ class ProductListWire extends Component
     {
         return [
             "sortBy" => ["as" => "sort-by", "except" => ""],
-            "sortDirection" => ["as" => "sort-direction", "except" => ""],
+            "sortDirection" => ["as" => "sort-order", "except" => ""],
             "filters" => ["as" => "f", "except" => ""],
         ];
     }
@@ -37,8 +37,19 @@ class ProductListWire extends Component
     public function render(): View
     {
         $products = ProductFiltersActions::filterByCategory($this->category);
-        debugbar()->info($products);
         return view("cp::livewire.web.catalog.product-list-wire", compact("products"));
+    }
+
+    public function applySort(string $sort, string $direction): void
+    {
+        $this->sortBy = $sort;
+        $this->sortDirection = $direction;
+        $this->resetPage();
+        request()->request->add([
+            "f" => $this->filters,
+            "sort-by" => $this->sortBy,
+            "sort-order" => $this->sortDirection,
+        ]);
     }
 
     #[On("change-filter-query")]

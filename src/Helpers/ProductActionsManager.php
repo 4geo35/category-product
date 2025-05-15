@@ -9,6 +9,7 @@ use GIS\CategoryProduct\Interfaces\ProductInterface;
 use GIS\CategoryProduct\Interfaces\SpecificationGroupInterface;
 use GIS\CategoryProduct\Interfaces\SpecificationInterface;
 use GIS\CategoryProduct\Interfaces\SpecificationValueInterface;
+use GIS\CategoryProduct\Models\Product;
 use GIS\CategoryProduct\Models\SpecificationGroup;
 use GIS\CategoryProduct\Models\SpecificationValue;
 use Illuminate\Database\Eloquent\Collection;
@@ -16,6 +17,23 @@ use Illuminate\Support\Facades\Cache;
 
 class ProductActionsManager
 {
+    public function getTeaserData(int $id): ?ProductInterface
+    {
+        $key = "product-actions-getTeaserData:{$id}";
+        return Cache::rememberForever($key, function () use ($id) {
+            $productModelClass = config("category-product.customProductModel") ?? Product::class;
+            return $productModelClass::query()
+                ->where('id', $id)
+                ->with("cover")
+                ->first();
+        });
+    }
+
+    public function forgetTeaserData(int $id): void
+    {
+        Cache::forget("product-actions-getTeaserData:{$id}");
+    }
+
     public function getSpecifications(ProductInterface $product): Collection
     {
         return $product->specifications()

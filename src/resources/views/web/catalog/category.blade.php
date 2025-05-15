@@ -15,12 +15,12 @@
         </div>
     </div>
 
-{{--    @push("modals")--}}
-{{--        <x-tt::modal.aside id="filterModal" direction="left" event="toggle_mobile_filter">--}}
-{{--            <x-slot name="title">Фильтры</x-slot>--}}
-{{--            <x-slot name="content">--}}
-{{--                <livewire:cp-category-filter :category="$category" is-modal />--}}
-{{--            </x-slot>--}}
-{{--        </x-tt::modal.aside>--}}
-{{--    @endpush--}}
+    @push("modals")
+        <x-tt::modal.aside id="filterModal" direction="left" event="toggle_mobile_filter">
+            <x-slot name="title">Фильтры</x-slot>
+            <x-slot name="content">
+                <livewire:cp-category-filter :category="$category" is-modal />
+            </x-slot>
+        </x-tt::modal.aside>
+    @endpush
 </x-app-layout>

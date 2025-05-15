@@ -23,7 +23,7 @@ class ProductObserver
             $product->saveQuietly();
         }
 
-        // TODO: forget teaser data
+        ProductActions::forgetTeaserData($product->id);
         if ($product->wasChanged("published_at")) {
             $this->forgetCategoryCache($product);
         }
@@ -31,7 +31,7 @@ class ProductObserver
 
     public function deleted(ProductInterface $product): void
     {
-        // TODO: forget teaser data
+        ProductActions::forgetTeaserData($product->id);
         $this->forgetCategoryCache($product);
 
         foreach ($product->specifications as $specification) {
