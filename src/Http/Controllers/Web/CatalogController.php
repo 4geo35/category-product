@@ -49,6 +49,7 @@ class CatalogController extends Controller
         $metas = MetaActions::renderByModel($product);
         $images = $product->images()->orderBy("priority")->get();
         $specificationData = ProductActions::getSpecificationsByGroup($product);
+        debugbar()->info($specificationData);
         return view(
             "cp::web.catalog.product",
             compact("product", "parents", "metas", "images", "specificationData")

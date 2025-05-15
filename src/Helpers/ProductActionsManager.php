@@ -81,14 +81,20 @@ class ProductActionsManager
              * @var SpecificationGroupInterface $group
              */
             $id = $specification->id;
+            $value = $item->value;
+            if ($item->type === "color") {
+                $color = $item->color;
+                $value .= "|" . $color->hash;
+            }
             if (empty($group)) {
                 if (empty($noGroup[$id])) {
                     $noGroup[$id] = (object) [
                         "values" => [],
+                        "type" => $item->type,
                         "title" => $item->title,
                     ];
                 }
-                $noGroup[$id]->values[] = $item->value;
+                $noGroup[$id]->values[] = $value;
             } else {
                 $groupId = $group->id;
                 if (empty($groups[$groupId])) {
@@ -100,10 +106,11 @@ class ProductActionsManager
                 if (empty($groups[$groupId]["items"][$id])) {
                     $groups[$groupId]["items"][$id] = (object) [
                         "values" => [],
+                        "type" => $item->type,
                         "title" => $item->title,
                     ];
                 }
-                $groups[$groupId]["items"][$id]->values[] = $item->value;
+                $groups[$groupId]["items"][$id]->values[] = $value;
             }
         }
 
