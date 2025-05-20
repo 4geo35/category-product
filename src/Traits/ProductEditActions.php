@@ -169,7 +169,7 @@ trait ProductEditActions
             $this->authorize($action, $product ?? $productModelClass);
             return true;
         } catch (AuthorizationException $e) {
-            session()->flash("service-error", "Неавторизованное действие");
+            session()->flash("product-error", "Неавторизованное действие");
             $this->closeData();
             $this->closeDelete();
             return false;

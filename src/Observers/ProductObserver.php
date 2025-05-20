@@ -38,7 +38,12 @@ class ProductObserver
             $specification->delete();
         }
 
-        // TODO: check variations
+        if (config("product-variation")) {
+            foreach ($product->variations as $variation) {
+                $variation->delete();
+            }
+            // TODO: delete from order items
+        }
     }
 
     protected function forgetCategoryCache(ProductInterface $product): void

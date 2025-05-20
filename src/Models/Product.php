@@ -5,6 +5,7 @@ namespace GIS\CategoryProduct\Models;
 use GIS\CategoryProduct\Interfaces\ProductInterface;
 use GIS\Fileable\Traits\ShouldGallery;
 use GIS\Metable\Traits\ShouldMeta;
+use GIS\ProductVariation\Models\ProductVariation;
 use GIS\TraitsHelpers\Traits\ShouldHumanDate;
 use GIS\TraitsHelpers\Traits\ShouldHumanPublishDate;
 use GIS\TraitsHelpers\Traits\ShouldMarkdown;
@@ -37,6 +38,15 @@ class Product extends Model implements ProductInterface
         return $this->hasMany($valueModelClass, "product_id");
     }
 
-    // TODO: variations
+    public function variations(): HasMany
+    {
+        if (config("product-variation")) {
+            $variationModelClass = config("product-variation.customVariationModel") ?? ProductVariation::class;
+            return $this->hasMany($variationModelClass, "product_id");
+        } else {
+            return new HasMany($this->newQuery(), $this, "", "");
+        }
+    }
+
     // TODO: order items
 }
