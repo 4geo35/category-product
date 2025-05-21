@@ -10,7 +10,7 @@
 
         <div class="col w-full md:w-3/4">
             <div>{{ $product->short }}</div>
-            <div>TODO: variations</div>
+            @includeIf("pv::web.variations.show")
         </div>
     </div>
 </div>
