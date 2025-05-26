@@ -5,6 +5,7 @@ namespace GIS\CategoryProduct\Traits;
 use GIS\CategoryProduct\Facades\CategoryActions;
 use GIS\CategoryProduct\Facades\SpecificationActions;
 use GIS\CategoryProduct\Models\Product;
+use GIS\ProductVariation\Facades\ProductVariationActions;
 use Illuminate\Database\Query\JoinClause;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
@@ -16,8 +17,16 @@ trait FilterQuery
     {
         $productModelClass = config("category-product.customProductModel") ?? Product::class;
         $this->query = $productModelClass::query();
-        // TODO: check variation
-        $this->query->select("products.id");
+        if (config("product-variation")) {
+            if ($this->getCurrentSortDirection() === "desc") { $value = -1; }
+            else { $value = config("product-variation.priceSortReplaceNull"); }
+            $this->query->select(
+                "products.id",
+                DB::raw("if (`minimal` is not null, `minimal`, $value) `priceSort`")
+            );
+        } else {
+            $this->query->select("products.id");
+        }
 
         $this->query->whereNotNull("products.published_at");
     }
@@ -38,7 +47,12 @@ trait FilterQuery
                 "type" => $item->type,
             ];
         }
-        // TODO: add variations
+        if (config("product-variation")) {
+            $this->slugValues[config("product-variation.priceFilterKey")] = [
+                "id" => 0,
+                "type" => "range"
+            ];
+        }
     }
 
     protected function applyFilters(int $perPage = null): LengthAwarePaginator
@@ -52,7 +66,15 @@ trait FilterQuery
             if ($this->addRangeToQuery($key, $value, $params)) continue;
         }
 
-        // TODO: add variations
+        if (config("product-variation") && empty($params[config("product-variation.priceFilterKey")])) {
+            $range = ["from" => 0, "to" => 0];
+            $ranges = ProductVariationActions::getPriceQuery($range,false);
+            $key = config("product-variation.priceFilterKey");
+            // joinSub нужен что бы при отсутствии фильтра по цене, выводил все, даже те что пустые
+            $this->query->leftJoinSub($ranges, $key, function (JoinClause $join) use ($key) {
+                $join->on("products.id", "=", "{$key}.product_id");
+            });
+        }
 
         $this->query->groupBy("products.id");
         $this->addSortCondition();
@@ -118,18 +140,35 @@ trait FilterQuery
 
     protected function addRangeToQuery($key, $value, &$params): bool
     {
-        // TODO add variations
+        if (config("product-variation") && config("product-variation.priceFilterKey") == $key) {
+            $prices = ProductVariationActions::getPricesForCategory($this->category, true);
+            if (is_array($prices) && count($prices) > 0) {
+                $max = (int) max($prices);
+                $min = (int) min($prices);
+                $notBetween = $value["from"] != $min || $value["to"] != $max;
+            } else { $notBetween = false; }
 
-        $ranges = DB::table("specification_values")
-            ->select("product_id")
-            ->whereIn("category_id", $this->categoryIds)
-            ->where("specification_id", $this->slugValues[$key]["id"])
-            ->whereBetween("value", [$value["from"], $value["to"]])
-            ->groupBy("product_id");
+            if ($notBetween) {
+                $ranges = ProductVariationActions::getPriceQuery($value);
+                $this->query->joinSub($ranges, $key, function (JoinClause $join) use ($key) {
+                    $join->on("products.id", "=", "{$key}.product_id");
+                });
+            } else {
+                // Удалить диапазон, что бы сработало условие по отсутствию цене
+                unset($params[$key]);
+            }
+        } else {
+            $ranges = DB::table("specification_values")
+                ->select("product_id")
+                ->whereIn("category_id", $this->categoryIds)
+                ->where("specification_id", $this->slugValues[$key]["id"])
+                ->whereBetween("value", [$value["from"], $value["to"]])
+                ->groupBy("product_id");
 
-        $this->query->joinSub($ranges, $key, function (JoinClause $join) use ($key) {
-            $join->on("products.id", "=", "{$key}.product_id");
-        });
+            $this->query->joinSub($ranges, $key, function (JoinClause $join) use ($key) {
+                $join->on("products.id", "=", "{$key}.product_id");
+            });
+        }
 
         return true;
     }
