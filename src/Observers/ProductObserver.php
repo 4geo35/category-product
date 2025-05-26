@@ -6,6 +6,7 @@ use GIS\CategoryProduct\Facades\CategoryActions;
 use GIS\CategoryProduct\Facades\ProductActions;
 use GIS\CategoryProduct\Interfaces\ProductInterface;
 use GIS\ProductVariation\Facades\ProductVariationActions;
+use GIS\ProductVariation\Interfaces\OrderItemInterface;
 
 class ProductObserver
 {
@@ -43,7 +44,14 @@ class ProductObserver
             foreach ($product->variations as $variation) {
                 $variation->delete();
             }
-            // TODO: delete from order items
+
+            foreach ($product->items as $item) {
+                /**
+                 * @var OrderItemInterface $item
+                 */
+                $item->product()->dissociate();
+                $item->save();
+            }
         }
     }
 

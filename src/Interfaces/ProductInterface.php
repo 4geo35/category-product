@@ -23,4 +23,5 @@ interface ProductInterface extends Arrayable, ArrayAccess, CanBeEscapedWhenCastT
     public function category(): BelongsTo;
     public function specifications(): HasMany;
     public function variations(): HasMany;
+    public function items(): HasMany;
 }
