@@ -23,4 +23,6 @@
             </x-slot>
         </x-tt::modal.aside>
     @endpush
+
+    @include("cp::web.catalog.includes.filter-range-script")
 </x-app-layout>

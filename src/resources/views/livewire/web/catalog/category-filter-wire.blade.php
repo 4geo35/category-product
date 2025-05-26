@@ -9,7 +9,7 @@
                     <livewire:cp-color-filter :data="$filter" :key="$filter->id" wire:model="filterItems.{{ $filter->slug }}" :is-modal="$isModal" />
                     @break
                 @case("range")
-                    <div>Range</div>
+                    <x-cp::filter.range :data="$filter" :is-modal="$isModal" :filter-items="$filterItems" />
                     @break
             @endswitch
         </div>
