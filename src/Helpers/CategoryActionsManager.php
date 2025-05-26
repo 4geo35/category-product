@@ -4,6 +4,7 @@ namespace GIS\CategoryProduct\Helpers;
 
 use GIS\CategoryProduct\Interfaces\CategoryInterface;
 use GIS\CategoryProduct\Models\Category;
+use GIS\CategoryProduct\Models\Product;
 use GIS\TraitsHelpers\Interfaces\ShouldTreeInterface;
 use GIS\TraitsHelpers\Traits\ManagerTreeTrait;
 use Illuminate\Support\Facades\Cache;
@@ -16,6 +17,37 @@ class CategoryActionsManager
     {
         $this->modelClass = config("category-product.customCategoryModel") ?? Category::class;
         $this->hasImage = true;
+    }
+
+    public function getProductIds(CategoryInterface $category, bool $includeSubs = false): array
+    {
+        $key = "category-actions-getProductIds:{$category->id}";
+        $key .= $includeSubs ? "-true" : "-false";
+        return Cache::rememberForever($key, function () use ($category, $includeSubs) {
+            $productModelClass = config("category-product.customProductModel") ?? Product::class;
+            $query = $productModelClass::query()
+                ->select("id")
+                ->whereNotNull("published_at");
+            if ($includeSubs) {
+                $query->whereIn("category_id", $this->getChildrenIds($category, true));
+            } else {
+                $query->where("category_id", $category->id);
+            }
+            $products = $query->get();
+            $pIds = [];
+            foreach ($products as $product) {
+                $pIds[] = $product->id;
+            }
+            return $pIds;
+        });
+    }
+
+    public function forgetProductIds(CategoryInterface $category): void
+    {
+        $key = "category-actions-getProductIds:{$category->id}";
+        Cache::forget("$key-true");
+        Cache::forget("$key-false");
+        if (! empty($category->parent_id)) { $this->forgetProductIds($category->parent); }
     }
 
     public function getParents(CategoryInterface $category): array

@@ -5,6 +5,7 @@ namespace GIS\CategoryProduct\Observers;
 use GIS\CategoryProduct\Facades\CategoryActions;
 use GIS\CategoryProduct\Facades\ProductActions;
 use GIS\CategoryProduct\Interfaces\ProductInterface;
+use GIS\ProductVariation\Facades\ProductVariationActions;
 
 class ProductObserver
 {
@@ -50,7 +51,9 @@ class ProductObserver
     {
         $category = $product->category;
         ProductActions::forgetSpecificationValues($category);
-        // TODO: forget pids
-        // TODO: check variation
+        CategoryActions::forgetProductIds($category);
+        if (config("product-variation")) {
+            ProductVariationActions::forgetPricesForCategory($category);
+        }
     }
 }

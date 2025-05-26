@@ -20,6 +20,7 @@ class CategoryFilterWire extends Component
     public function mount(): void
     {
         $this->filters = ProductFiltersActions::getFilters($this->category, true);
+        debugbar()->info($this->filters);
         $this->setFilterItems();
     }
 

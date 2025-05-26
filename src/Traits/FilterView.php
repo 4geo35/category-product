@@ -2,6 +2,8 @@
 
 namespace GIS\CategoryProduct\Traits;
 
+use GIS\CategoryProduct\Interfaces\CategoryInterface;
+use GIS\ProductVariation\Facades\ProductVariationActions;
 use Illuminate\Support\Arr;
 
 trait FilterView
@@ -87,5 +89,26 @@ trait FilterView
             }
             $filter->renderValues = $renderValues;
         }
+    }
+
+    protected function setPriceFilter(CategoryInterface $category, array &$specInfo, bool $includeSubs): void
+    {
+        if (! config("product-variation")) return;
+        $prices = ProductVariationActions::getPricesForCategory($category, $includeSubs);
+        if (empty($prices)) return;
+        $this->addPricesToSpecInfo($specInfo, $prices);
+    }
+
+    protected function addPricesToSpecInfo(array &$specInfo, array $prices): void
+    {
+        $specInfo[0] = (object) [
+            "id" => 0,
+            "title" => "Цена",
+            "slug" => config('product-variation.priceFilterKey'),
+            "filter" => now()->toString(),
+            "type" => "range",
+            "priority" => -1,
+            "values" => $prices,
+        ];
     }
 }

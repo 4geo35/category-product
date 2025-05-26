@@ -30,7 +30,7 @@ class ProductFiltersActionsManager
         $specValues = ProductActions::getSpecificationValues($category);
         // Распределение полученных значений
         $this->setProductValuesToFilter($specInfo, $specValues);
-        // TODO: setPriceFilter
+        $this->setPriceFilter($category, $specInfo, $includeSubs);
         $this->prepareRangeFilters($specInfo);
         $this->prepareCheckboxFilters($specInfo);
         $this->prepareColorFilters($specInfo);

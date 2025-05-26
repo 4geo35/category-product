@@ -7,6 +7,9 @@ use GIS\CategoryProduct\Interfaces\CategoryInterface;
 use Illuminate\Support\Facades\Facade;
 
 /**
+ * @method static array getProductIds(CategoryInterface $category, bool $includeSubs = false)
+ * @method static void forgetProductIds(CategoryInterface $category)
+ *
  * @method static array getParents(CategoryInterface $category)
  * @method static void forgetParents(CategoryInterface $category)
  *

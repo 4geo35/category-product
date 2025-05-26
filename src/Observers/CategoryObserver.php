@@ -6,6 +6,7 @@ use GIS\CategoryProduct\Facades\CategoryActions;
 use GIS\CategoryProduct\Facades\ProductActions;
 use GIS\CategoryProduct\Interfaces\CategoryInterface;
 use GIS\CategoryProduct\Models\Category;
+use GIS\ProductVariation\Facades\ProductVariationActions;
 
 class CategoryObserver
 {
@@ -30,13 +31,14 @@ class CategoryObserver
         if ($category->wasChanged("parent_id")) {
             $parent = $category->parent;
 
-            CategoryActions::forgetParents($category);
             ProductActions::forgetSpecificationValues($category);
             CategoryActions::forgetParents($category);
             if ($parent) {
                 CategoryActions::forgetChildrenIds($parent);
             }
-            // TODO: forget prices
+            if (config("product-variation")) {
+                ProductVariationActions::forgetPricesForCategory($category);
+            }
 
             if ($parent && ! $parent->published_at) {
                 $category->published_at = null;
@@ -51,7 +53,9 @@ class CategoryObserver
                 if (! empty($oldCategory)) {
                     ProductActions::forgetSpecificationValues($oldCategory);
                     CategoryActions::forgetChildrenIds($oldCategory);
-                    // TODO: forget prices
+                    if (config("product-variation")) {
+                        ProductVariationActions::forgetPricesForCategory($category);
+                    }
                 }
             }
         }
@@ -61,6 +65,8 @@ class CategoryObserver
     {
         CategoryActions::forgetParents($category);
         ProductActions::forgetSpecificationValues($category);
-        // TODO: forget prices
+        if (config("product-variation")) {
+            ProductVariationActions::forgetPricesForCategory($category);
+        }
     }
 }
