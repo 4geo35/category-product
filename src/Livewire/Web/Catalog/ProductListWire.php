@@ -37,7 +37,6 @@ class ProductListWire extends Component
     public function render(): View
     {
         $products = ProductFiltersActions::filterByCategory($this->category);
-        debugbar()->info($products);
         return view("cp::livewire.web.catalog.product-list-wire", compact("products"));
     }
 
