@@ -20,6 +20,7 @@ use GIS\CategoryProduct\Observers\ProductObserver;
 use GIS\CategoryProduct\Observers\SpecificationGroupObserver;
 use GIS\CategoryProduct\Observers\SpecificationObserver;
 use GIS\CategoryProduct\Observers\SpecificationValueObserver;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use GIS\CategoryProduct\Livewire\Admin\Categories\ListWire as AdminCategoryListWire;
@@ -67,8 +68,19 @@ class CategoryProductServiceProvider extends ServiceProvider
         // Observers
         $this->observeModels();
 
+        // Policies
+        $this->setPolicies();
+
         // Listeners
         $this->listenEvents();
+    }
+
+    protected function setPolicies(): void
+    {
+        Gate::policy(config("category-product.customProductModel") ?? Product::class, config("category-product.productPolicy"));
+        Gate::policy(config("category-product.customCategoryModel") ?? Category::class, config("category-product.categoryPolicy"));
+        Gate::policy(config("category-product.customSpecificationGroupModel") ?? SpecificationGroup::class, config("category-product.specificationGroupPolicy"));
+        Gate::policy(config("category-product.customSpecificationModel") ?? Specification::class, config("category-product.specificationPolicy"));
     }
 
     protected function initFacades(): void
