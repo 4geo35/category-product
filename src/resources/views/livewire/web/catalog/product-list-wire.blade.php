@@ -1,5 +1,5 @@
 <div>
-    @include("cp::web.catalog.includes.product-controls")
+    @include("cp::web.catalog.includes.product.controls")
 
     @if (! $products->count())
         <div>По вашему запросу ничего не найдено</div>

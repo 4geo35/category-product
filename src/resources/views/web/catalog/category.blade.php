@@ -1,6 +1,6 @@
 <x-app-layout>
-    @include("cp::web.catalog.includes.category-metas")
-    @include("cp::web.catalog.includes.category-breadcrumbs")
+    @include("cp::web.catalog.includes.category.metas")
+    @include("cp::web.catalog.includes.category.breadcrumbs")
 
     <div class="container">
         <div class="row">

@@ -110,4 +110,11 @@ return [
     "specificationGroupPolicyTitle" => "Управление группами характеристик",
     "specificationGroupPolicy" => \GIS\CategoryProduct\Policies\SpecificationGroupPolicy::class,
     "specificationGroupPolicyKey" => "specification_groups",
+
+    // Templates
+    "templates" => [
+        "category-teaser" => \GIS\CategoryProduct\Templates\CategoryTeaser::class,
+        "tablet-category-teaser" => \GIS\CategoryProduct\Templates\TabletCategoryTeaser::class,
+        "mobile-category-teaser" => \GIS\CategoryProduct\Templates\MobileCategoryTeaser::class,
+    ],
 ];

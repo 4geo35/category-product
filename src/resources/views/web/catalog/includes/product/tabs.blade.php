@@ -14,8 +14,8 @@
             </x-tt::tabs>
         </div>
         <div class="col w-full lg:w-3/4">
-            @include("cp::web.catalog.includes.product-description")
-            @include("cp::web.catalog.includes.product-specification")
+            @include("cp::web.catalog.includes.product.description")
+            @include("cp::web.catalog.includes.product.specification")
         </div>
     </div>
 </div>

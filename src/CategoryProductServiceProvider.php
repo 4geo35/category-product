@@ -20,6 +20,7 @@ use GIS\CategoryProduct\Observers\ProductObserver;
 use GIS\CategoryProduct\Observers\SpecificationGroupObserver;
 use GIS\CategoryProduct\Observers\SpecificationObserver;
 use GIS\CategoryProduct\Observers\SpecificationValueObserver;
+use GIS\Fileable\Traits\ExpandTemplatesTrait;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
@@ -35,6 +36,7 @@ use GIS\CategoryProduct\Livewire\Web\Catalog\CategoryFilterWire;
 
 class CategoryProductServiceProvider extends ServiceProvider
 {
+    use ExpandTemplatesTrait;
     public function register(): void
     {
         // Migrations
@@ -187,6 +189,7 @@ class CategoryProductServiceProvider extends ServiceProvider
     protected function expandConfiguration(): void
     {
         $cp = app()->config["category-product"];
+        $this->expandTemplates($cp);
 
         $um = app()->config["user-management"];
         $permissions = $um["permissions"];

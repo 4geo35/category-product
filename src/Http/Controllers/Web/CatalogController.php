@@ -44,12 +44,13 @@ class CatalogController extends Controller
 
     public function product(ProductInterface $product): View
     {
+        if (! $product->published_at) { abort(404); }
+
         $product->load("images", "category");
         $parents = CategoryActions::getParents($product->category);
         $metas = MetaActions::renderByModel($product);
         $images = $product->images()->orderBy("priority")->get();
         $specificationData = ProductActions::getSpecificationsByGroup($product);
-        debugbar()->info($specificationData);
         return view(
             "cp::web.catalog.product",
             compact("product", "parents", "metas", "images", "specificationData")
