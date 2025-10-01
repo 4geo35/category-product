@@ -15,6 +15,7 @@
     <div class="flex items-center justify-end space-x-indent-half" wire:ignore>
         {{-- При изменении класса цвета кнопок, нужно их обнулить в product-list-wire --}}
         <button type="button" @click="gridView = 'list'; $dispatch('change-product-grid-view', { view: 'list' })"
+                {{-- TODO: move to function --}}
                 :class="gridView === 'list' ? 'text-primary' : 'text-primary/25'" x-ref="listButton"
                 class="cursor-pointer {{ $gridView == 'list' ? 'text-primary' : 'text-primary/25' }} hover:text-primary-hover">
             <x-cp::ico.list />
