@@ -14,9 +14,21 @@ use GIS\CategoryProduct\Models\SpecificationGroup;
 use GIS\CategoryProduct\Models\SpecificationValue;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Cookie;
 
 class ProductActionsManager
 {
+    public function getGridView(): string
+    {
+        return Cookie::get("productGridView", config("category-product.defaultGridView"));
+    }
+
+    public function setGridView(string $view): void
+    {
+        $cookie = Cookie::make("productGridView", $view, 60*24*30);
+        Cookie::queue($cookie);
+    }
+
     public function getTeaserData(int $id): ?ProductInterface
     {
         $key = "product-actions-getTeaserData:{$id}";

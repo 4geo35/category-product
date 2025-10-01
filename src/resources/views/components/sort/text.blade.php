@@ -6,7 +6,7 @@
 <span class="inline-flex items-center">
     @if (! empty($options["{$by}.{$direction}"]))
         @php($item = $options["{$by}.{$direction}"])
-        @includeIf("{$item->ico}")
+        <span class="text-primary">@includeIf("{$item->ico}")</span>
         <span class="text-nowrap pl-indent-half">{{ $item->title }}</span>
     @else
         Сортировка

@@ -10,6 +10,7 @@ use GIS\CategoryProduct\Interfaces\CategoryInterface;
 use GIS\CategoryProduct\Interfaces\ProductInterface;
 use GIS\CategoryProduct\Livewire\Web\Catalog\CheckboxFilterWire;
 use GIS\CategoryProduct\Livewire\Web\Catalog\ColorFilterWire;
+use GIS\CategoryProduct\Livewire\Web\Catalog\SetProductViewCookie;
 use GIS\CategoryProduct\Models\Category;
 use GIS\CategoryProduct\Models\Product;
 use GIS\CategoryProduct\Models\Specification;
@@ -165,6 +166,12 @@ class CategoryProductServiceProvider extends ServiceProvider
         Livewire::component(
             "cp-product-list",
             $component ?? ProductListWire::class
+        );
+
+        $component = config("category-product.customWebProductCookieComponent");
+        Livewire::component(
+            "cp-product-view-cookie",
+            $component ?? SetProductViewCookie::class
         );
 
         $component = config("category-product.customWebCategoryFilterComponent");

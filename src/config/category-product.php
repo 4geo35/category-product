@@ -12,6 +12,7 @@ return [
     "useBreadcrumbs" => true,
     "useH1" => true,
     "catalogPageTitle" => "Каталог",
+    "defaultGridView" => "list",
 
     // Filters
     "checkboxShowCount" => 3,
@@ -90,6 +91,7 @@ return [
     "customAdminSpecificationValueListComponent" => null,
 
     "customWebProductListComponent" => null,
+    "customWebProductCookieComponent" => null,
     "customWebCategoryFilterComponent" => null,
     "customWebCheckboxFilterComponent" => null,
     "customWebColorFilterComponent" => null,

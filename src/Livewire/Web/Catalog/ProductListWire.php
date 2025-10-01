@@ -2,6 +2,7 @@
 
 namespace GIS\CategoryProduct\Livewire\Web\Catalog;
 
+use GIS\CategoryProduct\Facades\ProductActions;
 use GIS\CategoryProduct\Facades\ProductFiltersActions;
 use GIS\CategoryProduct\Interfaces\CategoryInterface;
 use Illuminate\View\View;
@@ -19,7 +20,6 @@ class ProductListWire extends Component
     public string $sortBy = "";
     public string $sortDirection = "";
     public array $filters = [];
-
     protected function queryString(): array
     {
         return [
@@ -37,7 +37,8 @@ class ProductListWire extends Component
     public function render(): View
     {
         $products = ProductFiltersActions::filterByCategory($this->category);
-        return view("cp::livewire.web.catalog.product-list-wire", compact("products"));
+        $gridView = ProductActions::getGridView();
+        return view("cp::livewire.web.catalog.product-list-wire", compact("products", "gridView"));
     }
 
     public function applySort(string $sort, string $direction): void

@@ -1,4 +1,9 @@
-<div>
+<div x-data="{ gridView: '{{ $gridView }}' }"
+     x-init="
+        console.log('hello');
+        $refs.listButton.classList.remove('text-primary', 'text-primary/25');
+        $refs.cardButton.classList.remove('text-primary', 'text-primary/25');
+        ">
     @include("cp::web.catalog.includes.product.controls")
 
     @if (! $products->count())

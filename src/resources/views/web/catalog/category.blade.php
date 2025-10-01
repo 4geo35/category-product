@@ -10,6 +10,8 @@
             <div class="col w-3/4">
                 <x-tt::h1 class="mb-indent-half">{{ $category->title }}</x-tt::h1>
                 @include("cp::web.catalog.includes.sub-categories")
+                {{-- Этот компонент просто ставит куку через лару --}}
+                <livewire:cp-product-view-cookie />
                 <livewire:cp-product-list :category="$category" />
             </div>
         </div>
