@@ -3,10 +3,12 @@
 
 <div class="product-teaser flex h-full bg-white shadow-md rounded-base overflow-hidden">
 {{--    @includeIf("pf::web.favorite.switcher")--}}
-    <a href="{{ $url }}" class="block overflow-hidden 2xl:h-[342px]">
+    <a href="{{ $url }}" class="block overflow-hidden sm:h-[258px] md:h-[336px] xl:h-[276px] 2xl:h-[342px]">
         @if ($product->cover)
             <picture>
-                <img src="{{ route('thumb-img', ['template' => 'product-teaser', 'filename' => $product->cover->file_name]) }}"
+                <source media="(min-width: 640px)"
+                        srcset="{{ route('thumb-img', ['template' => "product-teaser", 'filename' => $product->cover->file_name]) }}">
+                <img src="{{ route('thumb-img', ['template' => 'mobile-product-teaser', 'filename' => $product->cover->file_name]) }}"
                      alt="" class="">
             </picture>
         @else

@@ -4,10 +4,10 @@
 
     <div class="container">
         <div class="row">
-            <div class="col w-1/4">
+            <div class="col hidden lg:block lg:w-1/4">
                 <livewire:cp-category-filter :category="$category" />
             </div>
-            <div class="col w-3/4">
+            <div class="col w-full lg:w-3/4">
                 <x-tt::h1 class="mb-indent-half">{{ $category->title }}</x-tt::h1>
                 @include("cp::web.catalog.includes.sub-categories")
                 {{-- Этот компонент просто ставит куку через лару --}}

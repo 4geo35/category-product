@@ -120,5 +120,6 @@ return [
         "mobile-category-teaser" => \GIS\CategoryProduct\Templates\MobileCategoryTeaser::class,
 
         "product-teaser" => \GIS\CategoryProduct\Templates\ProductTeaser::class,
+        "mobile-product-teaser" => \GIS\CategoryProduct\Templates\MobileProductTeaser::class,
     ],
 ];

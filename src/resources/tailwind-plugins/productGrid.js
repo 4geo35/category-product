@@ -18,7 +18,10 @@ module.exports = plugin.withOptions(function (options = {}) {
 
                 "&.card-style .product-col": {
                     width: "100%",
-                    [bp2xl]: {
+                    [bpsm]: {
+                        width: "calc(1/2 * 100%)"
+                    },
+                    [bpxl]: {
                         width: "calc(1/3 * 100%)"
                     }
                 },
