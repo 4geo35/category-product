@@ -12,7 +12,7 @@ module.exports = plugin.withOptions(function (options = {}) {
 
         const components = {
             ".product-row": {
-                ".product-col": {
+                "& .product-col": {
                     width: "100%",
                 },
 
@@ -21,8 +21,16 @@ module.exports = plugin.withOptions(function (options = {}) {
                     [bp2xl]: {
                         width: "calc(1/3 * 100%)"
                     }
+                },
+
+                "& .product-teaser": {
+                    flexDirection: "row"
+                },
+
+                "&.card-style .product-teaser": {
+                    flexDirection: "column"
                 }
-            }
+            },
         }
 
         addComponents(components)

@@ -35,7 +35,7 @@
         <div class="row product-row {{ $gridView === 'card' ? 'card-style' : '' }}" x-ref="productRow">
             @foreach($products as $item)
                 @php($product = \GIS\CategoryProduct\Facades\ProductActions::getTeaserData($item->id))
-                <div class="col product-col">
+                <div class="col product-col mb-indent">
                     <x-cp::product.teaser :product="$product" />
                 </div>
             @endforeach

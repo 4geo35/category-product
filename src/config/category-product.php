@@ -118,5 +118,7 @@ return [
         "category-teaser" => \GIS\CategoryProduct\Templates\CategoryTeaser::class,
         "tablet-category-teaser" => \GIS\CategoryProduct\Templates\TabletCategoryTeaser::class,
         "mobile-category-teaser" => \GIS\CategoryProduct\Templates\MobileCategoryTeaser::class,
+
+        "product-teaser" => \GIS\CategoryProduct\Templates\ProductTeaser::class,
     ],
 ];
