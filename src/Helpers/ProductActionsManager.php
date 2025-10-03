@@ -13,6 +13,7 @@ use GIS\CategoryProduct\Models\Product;
 use GIS\CategoryProduct\Models\SpecificationGroup;
 use GIS\CategoryProduct\Models\SpecificationValue;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Cookie;
 
@@ -36,7 +37,7 @@ class ProductActionsManager
             $productModelClass = config("category-product.customProductModel") ?? Product::class;
             return $productModelClass::query()
                 ->where('id', $id)
-                ->with("cover")
+                ->with("cover", "specifications")
                 ->first();
         });
     }
@@ -44,6 +45,15 @@ class ProductActionsManager
     public function forgetTeaserData(int $id): void
     {
         Cache::forget("product-actions-getTeaserData:{$id}");
+    }
+
+    public function getSpecificationList(ProductInterface $product): array
+    {
+        $specificationsInfo = SpecificationActions::getSpecificationInfo();
+        $specificationValues = $product->specifications;
+        $sortedCollection = $this->prepareSpecificationCollection($specificationValues, $specificationsInfo);
+        $limitCollection = $sortedCollection->take(config("category-product.teaserSpecificationLimit"));
+        return $limitCollection->toArray();
     }
 
     public function getSpecifications(ProductInterface $product): Collection
@@ -171,5 +181,34 @@ class ProductActionsManager
         if (! empty($category->parent_id)) {
             $this->forgetSpecificationValues($category->parent);
         }
+    }
+
+    protected function prepareSpecificationCollection(Collection $values, array $specificationsInfo): \Illuminate\Support\Collection
+    {
+        $result = [];
+        foreach ($values as $specificationValue) {
+            $specificationId = $specificationValue->specification_id;
+            if (empty($specificationsInfo[$specificationId])) { continue; }
+            $specificationInfo = $specificationsInfo[$specificationId];
+            if (empty($result[$specificationId])) {
+                $result[$specificationId] = (object) [
+                    "title" => $specificationInfo->title,
+                    "priority" => $specificationInfo->priority,
+                    "values" => [],
+                ];
+            }
+            $result[$specificationId]->values[] = $specificationValue->value;
+        }
+        $collection = collect($result);
+        $sorted = $collection->sortBy(function (object $item) {
+            return $item->priority;
+        });
+        return $sorted->map(function (object $item) {
+            $result = $item;
+            $sortedValues = Arr::sort($item->values);
+            $result->values = $sortedValues;
+            $result->stringValues = implode(", ", $sortedValues);
+            return $result;
+        });
     }
 }

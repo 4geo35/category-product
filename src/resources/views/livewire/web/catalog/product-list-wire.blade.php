@@ -27,19 +27,23 @@
             el.classList.remove('text-primary', 'text-primary/25')
         }
     }" x-init="gridView = '{{ $gridView }}'">
+
     @include("cp::web.catalog.includes.product.controls")
 
-    @if (! $products->count())
-        <div>По вашему запросу ничего не найдено</div>
-    @else
-        <div class="row product-row {{ $gridView === 'card' ? 'card-style' : '' }}" x-ref="productRow">
+    <div class="row product-row {{ $gridView === 'card' ? 'card-style' : '' }}" x-ref="productRow">
+        @if (! $products->count())
+            <div class="col w-full">По вашему запросу ничего не найдено</div>
+        @else
             @foreach($products as $item)
                 @php($product = \GIS\CategoryProduct\Facades\ProductActions::getTeaserData($item->id))
                 <div class="col product-col mb-indent">
                     <x-cp::product.teaser :product="$product" />
                 </div>
             @endforeach
-        </div>
+        @endif
+    </div>
+
+    @if ($products->count())
         <div class="flex justify-between">
             <div>Всего: {{ $products->total() }}</div>
             {{ $products->links("tt::pagination.live") }}

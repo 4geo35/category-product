@@ -14,6 +14,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static ProductInterface|null getTeaserData(int $id)
  * @method static void forgetTeaserData(int $id)
  *
+ * @method static array getSpecificationList(ProductInterface $product)
+ *
  * @method static Collection getSpecifications(ProductInterface $product)
  * @method static array getSpecificationsByGroup(ProductInterface $product)
  *

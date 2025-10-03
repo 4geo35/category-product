@@ -14,11 +14,26 @@ module.exports = plugin.withOptions(function (options = {}) {
             ".product-row": {
                 "& .product-col": {
                     width: "100%",
+                    [bpsm]: {
+                        width: "calc(1/2 * 100%)"
+                    },
+                    [bpmd]: {
+                        width: "calc(1/3 * 100%)"
+                    },
+                    [bplg]: {
+                        width: "100%"
+                    }
                 },
 
                 "&.card-style .product-col": {
                     width: "100%",
                     [bpsm]: {
+                        width: "calc(1/2 * 100%)"
+                    },
+                    [bpmd]: {
+                        width: "calc(1/3 * 100%)"
+                    },
+                    [bplg]: {
                         width: "calc(1/2 * 100%)"
                     },
                     [bpxl]: {
@@ -27,11 +42,36 @@ module.exports = plugin.withOptions(function (options = {}) {
                 },
 
                 "& .product-teaser": {
-                    flexDirection: "row"
+                    flexDirection: "column",
+                    [bplg]: {
+                        flexDirection: "row"
+                    }
                 },
 
                 "&.card-style .product-teaser": {
                     flexDirection: "column"
+                },
+
+                "& .product-short": {
+                    display: "block",
+                    [bplg]: {
+                        display: "none"
+                    }
+                },
+
+                "&.card-style .product-short": {
+                    display: "block"
+                },
+
+                "& .product-specifications": {
+                    display: "none",
+                    [bplg]: {
+                        display: "block"
+                    }
+                },
+
+                "&.card-style .product-specifications": {
+                    display: "none"
                 }
             },
         }

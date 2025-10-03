@@ -2,6 +2,7 @@
 
 namespace GIS\CategoryProduct\Models;
 
+use GIS\CategoryProduct\Facades\ProductActions;
 use GIS\CategoryProduct\Interfaces\ProductInterface;
 use GIS\Fileable\Traits\ShouldGallery;
 use GIS\Metable\Traits\ShouldMeta;
@@ -57,5 +58,10 @@ class Product extends Model implements ProductInterface
         } else {
             return new HasMany($this->newQuery(), $this, "", "");
         }
+    }
+
+    public function getSpecificationListAttribute(): array
+    {
+        return ProductActions::getSpecificationList($this);
     }
 }

@@ -13,6 +13,7 @@ return [
     "useH1" => true,
     "catalogPageTitle" => "Каталог",
     "defaultGridView" => "list",
+    "teaserSpecificationLimit" => 3,
 
     // Filters
     "checkboxShowCount" => 3,
