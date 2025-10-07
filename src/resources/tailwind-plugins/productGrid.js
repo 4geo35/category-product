@@ -21,6 +21,9 @@ module.exports = plugin.withOptions(function (options = {}) {
                         width: "calc(1/3 * 100%)"
                     },
                     [bplg]: {
+                        width: "calc(1/2 * 100%)"
+                    },
+                    [bpxl]: {
                         width: "100%"
                     }
                 },
@@ -43,7 +46,7 @@ module.exports = plugin.withOptions(function (options = {}) {
 
                 "& .product-teaser": {
                     flexDirection: "column",
-                    [bplg]: {
+                    [bpxl]: {
                         flexDirection: "row"
                     }
                 },
@@ -54,7 +57,7 @@ module.exports = plugin.withOptions(function (options = {}) {
 
                 "& .product-short": {
                     display: "block",
-                    [bplg]: {
+                    [bpxl]: {
                         display: "none"
                     }
                 },
@@ -65,7 +68,7 @@ module.exports = plugin.withOptions(function (options = {}) {
 
                 "& .product-specifications": {
                     display: "none",
-                    [bplg]: {
+                    [bpxl]: {
                         display: "block"
                     }
                 },

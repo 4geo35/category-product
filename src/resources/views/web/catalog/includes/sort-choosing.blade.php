@@ -12,7 +12,7 @@
         </x-slot>
     </x-tt::dropdown>
 
-    <div class="hidden lg:flex items-center justify-end space-x-indent-half" wire:ignore>
+    <div class="hidden xl:flex items-center justify-end space-x-indent-half" wire:ignore>
         {{-- При изменении класса цвета кнопок, нужно их обнулить в product-list-wire --}}
         <button type="button" @click="chooseView('list')" x-ref="listButton"
                 class="cursor-pointer {{ $gridView == 'list' ? 'text-primary' : 'text-primary/25' }} hover:text-primary-hover">
