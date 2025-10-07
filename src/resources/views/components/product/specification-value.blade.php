@@ -1,9 +1,9 @@
 @props(["value"])
 <div class="row">
-    <div class="col w-full xl:w-1/2 xl:mb-2 text-body/60">
+    <div class="col w-full md:w-1/2 xl:mb-2 text-body/60">
         {{ $value->title }}
     </div>
-    <div class="col w-full xl:w-1/2 mb-2">
+    <div class="col w-full md:w-1/2 mb-2">
         @foreach($value->values as $item)
             @if ($value->type === "color")
                 @php($exploded = explode("|", $item))
