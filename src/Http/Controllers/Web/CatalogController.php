@@ -46,7 +46,7 @@ class CatalogController extends Controller
     {
         if (! $product->published_at) { abort(404); }
 
-        $product->load("images", "category");
+        $product->load("images", "category", "specifications");
         $parents = CategoryActions::getParents($product->category);
         $metas = MetaActions::renderByModel($product);
         $images = $product->images()->orderBy("priority")->get();

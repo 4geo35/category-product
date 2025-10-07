@@ -5,7 +5,7 @@
 <x-tt::tabs.content name="specifications">
     <x-slot name="title">Характеристики</x-slot>
 
-    <div class="space-y-indent-half">
+    <div class="flex flex-col gap-y-indent">
         @if (! empty($noGroup))
             @foreach($noGroup as $item)
                 <x-cp::product.specification-value :value="$item" />
@@ -13,8 +13,8 @@
         @endif
         @if (! empty($groups))
             @foreach($groups as $group)
+                <x-tt::h4>{{ $group->title }}</x-tt::h4>
                 <div class="space-y-indent-half">
-                    <x-tt::h3>{{ $group->title }}</x-tt::h3>
                     @foreach($group->items as $item)
                         <x-cp::product.specification-value :value="$item" />
                     @endforeach
