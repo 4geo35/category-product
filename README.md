@@ -10,14 +10,26 @@
 
 Запустить миграции для создания таблиц `php artisan migrate`
 
-Добавить `"flickity": "^2.3.0", "flickity-as-nav-for": "^2.0",` в `package.json`
-
-Добавить `@import "flickity/css/flickity.css";` в `app.css`;
-
-Добавить `import Flickity from "flickity"`, `import "flickity-as-nav-for"`, `window.Flickity = Flickity` в `app.js`
 
 Установить диапазон `npm i nouislider`
 
-Добавить `@import "nouislider/dist/nouislider.css";` в `app.css`
+Добавить в `app.css`:
+    
+    @import "nouislider/dist/nouislider.css";
 
-Добавить `import noUiSlider from "nouislider"`, `window.noUiSlider = noUiSlider` в `app.js`
+Добавить в `app.js`:
+
+    import noUiSlider from "nouislider"
+    window.noUiSlider = noUiSlider
+
+Установить слайдер `npm install swiper`
+
+Добавить в `app.js`:
+
+    import Swiper from "swiper/bundle"
+    import "swiper/css/bundle"
+    window.Swiper = Swiper
+
+Установить lightbox `npm install fslightbox`, добавить в `app.js`:
+
+    import "fslightbox"

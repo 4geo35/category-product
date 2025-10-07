@@ -122,5 +122,8 @@ return [
 
         "product-teaser" => \GIS\CategoryProduct\Templates\ProductTeaser::class,
         "mobile-product-teaser" => \GIS\CategoryProduct\Templates\MobileProductTeaser::class,
+
+        "product-show" => \GIS\CategoryProduct\Templates\ProductShow::class,
+        "product-show-thumb" => \GIS\CategoryProduct\Templates\ProductShowThumb::class,
     ],
 ];
