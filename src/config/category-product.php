@@ -124,6 +124,9 @@ return [
         "mobile-product-teaser" => \GIS\CategoryProduct\Templates\MobileProductTeaser::class,
 
         "product-show" => \GIS\CategoryProduct\Templates\ProductShow::class,
+        "tablet-product-show" => \GIS\CategoryProduct\Templates\TabletProductShow::class,
+        "mobile-product-show" => \GIS\CategoryProduct\Templates\MobileProductShow::class,
+
         "product-show-thumb" => \GIS\CategoryProduct\Templates\ProductShowThumb::class,
     ],
 ];

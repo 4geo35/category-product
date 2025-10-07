@@ -6,10 +6,10 @@ namespace GIS\CategoryProduct\Templates;
 use Intervention\Image\Interfaces\ImageInterface;
 use Intervention\Image\Interfaces\ModifierInterface;
 
-class ProductShow implements ModifierInterface
+class TabletProductShow implements ModifierInterface
 {
     public function apply(ImageInterface $image): ImageInterface
     {
-        return $image->cover(576, 576);
+        return $image->cover(696, 576);
     }
 }
