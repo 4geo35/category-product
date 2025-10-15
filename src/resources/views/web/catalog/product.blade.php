@@ -5,4 +5,6 @@
 
     @include("cp::web.catalog.includes.product.top")
     @include("cp::web.catalog.includes.product.tabs")
+
+    @include("cp::web.catalog.includes.product.visit-list")
 </x-app-layout>

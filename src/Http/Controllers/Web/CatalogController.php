@@ -46,6 +46,9 @@ class CatalogController extends Controller
     {
         if (! $product->published_at) { abort(404); }
 
+        ProductActions::setVisit($product);
+        $visitCollection = ProductActions::getVisitCollection($product);
+
         $product->load("images", "category", "specifications");
         $parents = CategoryActions::getParents($product->category);
         $metas = MetaActions::renderByModel($product);
@@ -53,7 +56,7 @@ class CatalogController extends Controller
         $specificationData = ProductActions::getSpecificationsByGroup($product);
         return view(
             "cp::web.catalog.product",
-            compact("product", "parents", "metas", "images", "specificationData")
+            compact("product", "parents", "metas", "images", "specificationData", "visitCollection")
         );
     }
 }

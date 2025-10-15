@@ -19,6 +19,36 @@ use Illuminate\Support\Facades\Cookie;
 
 class ProductActionsManager
 {
+    public function setVisit(ProductInterface $product): array
+    {
+        $currentListJson = Cookie::get("productVisitList", "[]");
+        $currentList = json_decode($currentListJson, true);
+        if (! in_array($product->id, $currentList)) {
+            $currentList[] = $product->id;
+        }
+        if (count($currentList) > config("category-product.storeVisitProductLimit")) {
+            array_shift($currentList);
+        }
+        $cookie = Cookie::make("productVisitList", json_encode($currentList), 60*24*30);
+        Cookie::queue($cookie);
+        return $currentList;
+    }
+
+    public function getVisitCollection(ProductInterface $product): Collection
+    {
+        $currentListJson = Cookie::get("productVisitList", "[]");
+        $currentList = json_decode($currentListJson, true);
+        $productModel = config("category-product.customProductModel") ?? Product::class;
+        return $productModel::query()
+            ->select("id")
+            ->whereIn("id", $currentList)
+            ->whereNotNull("published_at")
+            ->where("id", "!=", $product->id)
+            ->inRandomOrder()
+            ->limit(4)
+            ->get();
+    }
+
     public function getGridView(): string
     {
         return Cookie::get("productGridView", config("category-product.defaultGridView"));

@@ -14,6 +14,7 @@ return [
     "catalogPageTitle" => "Каталог",
     "defaultGridView" => "list",
     "teaserSpecificationLimit" => 3,
+    "storeVisitProductLimit" => 10,
 
     // Filters
     "checkboxShowCount" => 3,

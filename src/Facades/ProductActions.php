@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Facade;
 
 /**
+ * @method static array setVisit(ProductInterface $product)
+ * @method static Collection getVisitCollection(ProductInterface $product)
+ *
  * @method static string getGridView()
  * @method static void setGridView(string $view)
  *
