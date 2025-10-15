@@ -1,13 +1,17 @@
 <div>
     @if ($needSearch)
         <div class="mb-indent-half">
-            <label for="search-{{ $data->slug }}{{ $isModal ? '-modal' : '' }}" class="inline-block mb-2">{{ $data->title }}</label>
+            <label for="search-{{ $data->slug }}{{ $isModal ? '-modal' : '' }}" class="inline-block mb-2">
+                <span class="text-h4-mobile sm:text-h4 font-semibold">{{ $data->title }}</span>
+            </label>
             <input type="text" id="search-{{ $data->slug }}{{ $isModal ? '-modal' : '' }}"
                    class="form-control"
                    wire:model.live="search">
         </div>
     @else
-        <div class="mb-indent-half">{{ $data->title }}</div>
+        <div class="mb-indent-half">
+            <span class="text-h4-mobile sm:text-h4 font-semibold">{{ $data->title }}</span>
+        </div>
     @endif
     @foreach($filteredValues as $item)
         <div class="form-check" :key="$item['id']">
