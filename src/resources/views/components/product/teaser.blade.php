@@ -18,10 +18,11 @@
 
         @includeIf("pf::web.favorite.switcher")
     </div>
-    <div class="flex-auto flex flex-col justify-between p-indent-half lg:p-indent">
+    <div class="flex-auto flex flex-col justify-between p-indent-half lg:p-indent relative">
         <a href="{{ $url }}" class="text-h4-mobile sm:text-h4 font-semibold hover:text-primary-hover">
             {{ $product->title }}
         </a>
+        @includeIf("pv::web.variations.product-teaser-choose")
         <div class="mt-indent-half">
             @if ($product->short)
                 <div class="{{ count($product->specification_list) ? 'product-short' : '' }} text-sm lg:text-base text-body/60 overflow-hidden">
@@ -42,9 +43,7 @@
                     @endforeach
                 </ul>
             @endif
+            @includeIf("pv::web.variations.show-order-single-variation-button")
         </div>
-{{--        <div>--}}
-{{--            --}}{{-- TODO: add price --}}
-{{--        </div>--}}
     </div>
 </div>

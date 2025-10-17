@@ -67,7 +67,7 @@ class ProductActionsManager
             $productModelClass = config("category-product.customProductModel") ?? Product::class;
             return $productModelClass::query()
                 ->where('id', $id)
-                ->with("cover", "specifications")
+                ->with("cover", "specifications", "orderedVariations")
                 ->first();
         });
     }

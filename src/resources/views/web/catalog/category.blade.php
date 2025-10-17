@@ -2,6 +2,7 @@
     @include("cp::web.catalog.includes.category.metas")
     @include("cp::web.catalog.includes.category.breadcrumbs")
 
+    @includeIf("pv::web.variations.order-single-variation-modal")
     <div class="container">
         <div class="row">
             <div class="col hidden lg:block lg:w-1/3 xl:w-1/4">

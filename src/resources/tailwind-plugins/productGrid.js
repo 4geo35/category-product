@@ -75,6 +75,15 @@ module.exports = plugin.withOptions(function (options = {}) {
 
                 "&.card-style .product-specifications": {
                     display: "none"
+                },
+
+                "& .select-variation": {
+                    top: 0
+                },
+
+                "&.card-style .select-variation": {
+                    bottom: 0,
+                    top: "auto"
                 }
             },
         }

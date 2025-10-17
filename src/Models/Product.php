@@ -50,6 +50,15 @@ class Product extends Model implements ProductInterface
         }
     }
 
+    public function orderedVariations(): HasMany
+    {
+        if (config("product-variation")) {
+            return $this->variations()->whereNotNull("published_at")->orderBy("price");
+        } else {
+            return new HasMany($this->newQuery(), $this, "", "");
+        }
+    }
+
     public function items(): HasMany
     {
         if (config("product-variation")) {
