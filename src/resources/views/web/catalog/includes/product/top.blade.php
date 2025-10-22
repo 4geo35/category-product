@@ -54,7 +54,7 @@
                         @endforeach
                     </ul>
                 @endif
-{{--                @includeIf("pv::web.variations.show")--}}
+                @includeIf("pv::web.variations.show")
             </div>
         </div>
     </div>

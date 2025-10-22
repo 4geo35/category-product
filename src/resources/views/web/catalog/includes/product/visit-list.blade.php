@@ -1,5 +1,6 @@
 @if ($visitCollection->count())
     <div class="container mt-indent">
+        <x-tt::h2 class="mb-indent">Вы смотрели</x-tt::h2>
         <div class="row product-row card-style">
             @foreach($visitCollection as $item)
                 @php($product = \GIS\CategoryProduct\Facades\ProductActions::getTeaserData($item->id))

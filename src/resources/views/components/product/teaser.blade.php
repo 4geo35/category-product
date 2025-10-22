@@ -43,7 +43,7 @@
                     @endforeach
                 </ul>
             @endif
-            @includeIf("pv::web.variations.show-order-single-variation-button")
+            @includeIf("pv::web.variations.variation-button")
         </div>
     </div>
 </div>
