@@ -38,6 +38,7 @@ use GIS\CategoryProduct\Livewire\Web\Catalog\CategoryFilterWire;
 class CategoryProductServiceProvider extends ServiceProvider
 {
     use ExpandTemplatesTrait;
+
     public function register(): void
     {
         // Migrations
