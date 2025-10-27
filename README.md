@@ -8,6 +8,8 @@
         "./vendor/4geo35/category-product/src/resources/views/web/**/*.blade.php",
         "./vendor/4geo35/category-product/src/resources/views/livewire/web/**/*.blade.php",` в `tailwind.config.js`, созданный в пакете `tailwindcss-theme`.
 
+Добавить `require("./vendor/4geo35/category-product/src/resources/tailwind-plugins/productGrid"),` к плагинам в `tailwind.config.js`, созданный в пакете `tailwindcss-theme`
+
 Запустить миграции для создания таблиц `php artisan migrate`
 
 
