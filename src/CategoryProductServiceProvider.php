@@ -41,42 +41,28 @@ class CategoryProductServiceProvider extends ServiceProvider
 
     public function register(): void
     {
-        // Migrations
         $this->loadMigrationsFrom(__DIR__ . '/database/migrations');
 
-        // Routes
-        $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
-        $this->loadRoutesFrom(__DIR__ . '/routes/admin.php');
-
-        // Config
         $this->mergeConfigFrom(__DIR__ . "/config/category-product.php", 'category-product');
 
-        // Facades
         $this->initFacades();
-
-        // Bindings
         $this->bindInterfaces();
     }
 
     public function boot(): void
     {
-        // Views
         $this->loadViewsFrom(__DIR__ . '/resources/views', 'cp');
 
-        // Livewire
-        $this->addLivewireComponents();
+        $this->loadRoutesFrom(__DIR__ . '/routes/web.php');
+        $this->loadRoutesFrom(__DIR__ . '/routes/admin.php');
 
-        // Expand config
         $this->expandConfiguration();
-
-        // Observers
         $this->observeModels();
-
-        // Policies
         $this->setPolicies();
 
-        // Listeners
         $this->listenEvents();
+
+        $this->addLivewireComponents();
     }
 
     protected function setPolicies(): void
