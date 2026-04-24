@@ -14,6 +14,9 @@
                 {{-- Этот компонент просто ставит куку через лару --}}
                 <livewire:cp-product-view-cookie />
                 <livewire:cp-product-list :category="$category" />
+                @if ($category->description)
+                    <div class="prose max-w-none mt-indent">{!! $category->markdown !!}</div>
+                @endif
             </div>
         </div>
     </div>
