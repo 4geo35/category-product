@@ -86,6 +86,14 @@ class ProductActionsManager
         return $limitCollection->toArray();
     }
 
+    public function getSpecificationFullList(ProductInterface $product): array
+    {
+        $specificationsInfo = SpecificationActions::getSpecificationInfo();
+        $specificationValues = $product->specifications;
+        $sortedCollection = $this->prepareSpecificationCollection($specificationValues, $specificationsInfo);
+        return $sortedCollection->toArray();
+    }
+
     public function getSpecifications(ProductInterface $product): Collection
     {
         return $product->specifications()
