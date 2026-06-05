@@ -59,10 +59,10 @@ trait CategoryEditActions
         if (! $this->checkAuth("update", $category)) { return; }
 
         $this->displayData = true;
-        $this->title = $category->title;
-        $this->slug = $category->slug;
-        $this->short = $category->short;
-        $this->description = $category->description;
+        $this->title = (string) $category->title;
+        $this->slug = (string) $category->slug;
+        $this->short = (string) $category->short;
+        $this->description = (string) $category->description;
         if ($category->image_id) {
             $category->load("image");
             $this->coverUrl = $category->image->storage;
