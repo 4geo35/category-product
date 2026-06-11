@@ -6,6 +6,7 @@ use GIS\CategoryProduct\Interfaces\CategoryInterface;
 use GIS\CategoryProduct\Interfaces\ProductInterface;
 use GIS\CategoryProduct\Models\Product;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Support\Facades\Log;
 
 trait ProductEditActions
 {
@@ -53,10 +54,10 @@ trait ProductEditActions
         if (! $product) { return; }
         if (! $this->checkAuth("update", $product)) { return; }
 
-        $this->title = $product->title;
-        $this->slug = $product->slug;
-        $this->short = $product->short;
-        $this->description = $product->description;
+        $this->title = (string) $product->title;
+        $this->slug = (string) $product->slug;
+        $this->short = (string) $product->short;
+        $this->description = (string) $product->description;
         $this->displayData = true;
     }
 
@@ -119,6 +120,7 @@ trait ProductEditActions
             session()->flash("product-success", "Товар успешно удален");
         } catch (\Exception $exception) {
             session()->flash("product-error", "Ошибка при удалении товара");
+            Log::error("Error while deleting product {$product->id}: " . $exception->getMessage());
         }
 
         $this->closeDelete();
