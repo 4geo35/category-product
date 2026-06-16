@@ -26,7 +26,9 @@
         clearClass(el) {
             el.classList.remove('text-primary', 'text-primary/25')
         }
-    }" x-init="gridView = '{{ $gridView }}'">
+    }" x-init="gridView = '{{ $gridView }}'" class="relative">
+
+    <x-cp::product.loading-cover />
 
     @include("cp::web.catalog.includes.product.controls")
 

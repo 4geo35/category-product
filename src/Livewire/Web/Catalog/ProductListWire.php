@@ -33,6 +33,11 @@ class ProductListWire extends Component
         $this->sortOptions = config("category-product.sortOptions");
     }
 
+    public function updatedPage($page): void
+    {
+        $this->addParamsToRequest();
+    }
+
     public function render(): View
     {
         $products = ProductFiltersActions::filterByCategory($this->category);
@@ -45,11 +50,12 @@ class ProductListWire extends Component
         $this->sortBy = $sort;
         $this->sortDirection = $direction;
         $this->resetPage();
-        request()->request->add([
-            "f" => $this->filters,
-            "sort-by" => $this->sortBy,
-            "sort-order" => $this->sortDirection,
-        ]);
+//        request()->request->add([
+//            "f" => $this->filters,
+//            "sort-by" => $this->sortBy,
+//            "sort-order" => $this->sortDirection,
+//        ]);
+        $this->addParamsToRequest();
     }
 
     #[On("change-filter-query")]
@@ -61,6 +67,16 @@ class ProductListWire extends Component
         $this->filters = $result;
 
         $this->resetPage();
-        request()->request->add(["f" => $this->filters]);
+//        request()->request->add(["f" => $this->filters]);
+        $this->addParamsToRequest();
+    }
+
+    protected function addParamsToRequest(): void
+    {
+        request()->request->add([
+            "f" => $this->filters,
+            "sort-by" => $this->sortBy,
+            "sort-order" => $this->sortDirection,
+        ]);
     }
 }
