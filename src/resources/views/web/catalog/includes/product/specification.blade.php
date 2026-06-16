@@ -7,9 +7,11 @@
 
     <div class="flex flex-col gap-y-indent">
         @if (! empty($noGroup))
-            @foreach($noGroup as $item)
-                <x-cp::product.specification-value :value="$item" />
-            @endforeach
+            <div class="space-y-indent-half">
+                @foreach($noGroup as $item)
+                    <x-cp::product.specification-value :value="$item" />
+                @endforeach
+            </div>
         @endif
         @if (! empty($groups))
             @foreach($groups as $group)
