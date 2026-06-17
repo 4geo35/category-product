@@ -31,11 +31,8 @@ class ProductObserver
         }
     }
 
-    public function deleted(ProductInterface $product): void
+    public function deleting(ProductInterface $product): void
     {
-        ProductActions::forgetTeaserData($product->id);
-        $this->forgetCategoryCache($product);
-
         foreach ($product->specifications as $specification) {
             $specification->delete();
         }
@@ -53,6 +50,12 @@ class ProductObserver
                 $item->save();
             }
         }
+    }
+
+    public function deleted(ProductInterface $product): void
+    {
+        ProductActions::forgetTeaserData($product->id);
+        $this->forgetCategoryCache($product);
     }
 
     protected function forgetCategoryCache(ProductInterface $product): void
