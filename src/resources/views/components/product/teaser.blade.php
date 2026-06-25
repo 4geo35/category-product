@@ -23,7 +23,7 @@
             {{ $product->title }}
         </a>
         @includeIf("pv::web.variations.product-teaser-choose")
-        <div class="mt-indent-half">
+        <div class="mt-indent-half flex-auto flex flex-col justify-end">
             @if ($product->short)
                 <div class="{{ count($product->specification_list) ? 'product-short' : '' }} text-sm lg:text-base text-body/60 overflow-hidden">
                     {{ $product->short }}
